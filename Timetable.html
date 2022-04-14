@@ -4,17 +4,29 @@
 	table, th, td {
 		border:  1px solid black;
 	}
+	.button {
+		border: none;
+		color: blue;
+		padding: 1px 2px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 100%;
+		margin: 1px 1px;
+		cursor: pointer;
+	}
+	.center {
+		width:  75%;
+		margin-left: auto;
+  		margin-right: auto;
+	}
 </style>
-
-<head>
-	<script type="text/javascript" src="http://livejs.com/live.js"></script>
-</head>
 
 <body>
 
-<h2>Timetable</h2>
+<h2 class="center">Timetable</h2>
 
-<table style="width: 100%">
+<table class="center">
 	<tr>
 		<th>Time</th>
 		<th>Monday</th>
@@ -160,9 +172,9 @@
 
 </table>
 
-<h2>Week of 11.11</h2>
+<h2 class="center">Week of 11.11</h2>
 
-<table style="width: 100%">
+<table class="center">
 	<tr>
 		<th>Time</th>
 		<th class = "monday">Monday</th>
@@ -176,142 +188,393 @@
 
 	<tr>
 		<td>0900-1000</td>
-		<td class = "monday"></td>			<!--Monday-->
-		<td class = "tuesday">Jia</td>		<!--Tuesday-->
-		<td class = "wednesday"></td>		<!--Wednesday-->
-		<td class = "thursday">Jia</td>		<!--Thursday-->
-		<td class = "friday"></td>			<!--Friday-->
-		<td class = "saturday"></td>		<!--Saturday-->
-		<td class = "sunday">Jesse</td>		<!--Sunday-->
+		<td class = "monday">
+			<div id="cell1"></div>
+			<div style="text-align:right";><button id="1" class="button" onclick="SetCell(this)">+</button></div>
+		</td>			
+		<td class = "tuesday">
+			<div id="cell2"></div>
+			<div style="text-align:right";><button id="2" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "wednesday">
+			<div id="cell3"></div>
+			<div style="text-align:right";><button id="3" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "thursday">
+			<div id="cell4"></div>
+			<div style="text-align:right";><button id="4" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "friday">
+			<div id="cell5"></div>
+			<div style="text-align:right";><button id="5" class="button" onclick="SetCell(this)">+</button></div>
+		</td>			
+		<td class = "saturday">
+			<div id="cell6"></div>
+			<div style="text-align:right";><button id="6" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "sunday">
+			<div id="cell7"></div>
+			<div style="text-align:right";><button id="7" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
 	</tr>
 
 	<tr>
 		<td>1000-1100</td>
-		<td class = "monday"></td>			<!--Monday-->
-		<td class = "tuesday">Jia</td>		<!--Tuesday-->
-		<td class = "wednesday">Gurtegh</br>
-		Harvi/Jesse</td>	<!--Wednesday-->
-		<td class = "thursday">Gurtegh</td>	<!--Thursday-->
-		<td class = "friday"></td>			<!--Friday-->
-		<td class = "saturday"></td>			<!--Saturday-->
-		<td class = "sunday">Kaidan</td>		<!--Sunday-->
+		<td class = "monday">
+			<div id="cell8"></div>
+			<div style="text-align:right";><button id="8" class="button" onclick="SetCell(this)">+</button></div>
+		</td>			
+		<td class = "tuesday">
+			<div id="cell9"></div>
+			<div style="text-align:right";><button id="9" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "wednesday">
+			<div id="cell10"></div>
+			<div style="text-align:right";><button id="10" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "thursday">
+			<div id="cell11"></div>
+			<div style="text-align:right";><button id="11" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "friday">
+			<div id="cell12"></div>
+			<div style="text-align:right";><button id="12" class="button" onclick="SetCell(this)">+</button></div>
+		</td>			
+		<td class = "saturday">
+			<div id="cell13"></div>
+			<div style="text-align:right";><button id="13" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "sunday">
+			<div id="cell14"></div>
+			<div style="text-align:right";><button id="14" class="button" onclick="SetCell(this)">+</button></div>
+		</td>	
 	</tr>
 
 	<tr>
 		<td>1100-1200</td>
-		<td class = "monday"></td>			<!--Monday-->
-		<td class = "tuesday"></td>			<!--Tuesday-->
-		<td class = "wednesday"></td>			<!--Wednesday-->
-		<td class = "thursday"></td>			<!--Thursday-->
-		<td class = "friday"></td>			<!--Friday-->
-		<td class = "saturday"></td>			<!--Saturday-->
-		<td class = "sunday">Kaidan</td>		<!--Sunday-->
+		<td class = "monday">
+			<div id="cell15"></div>
+			<div style="text-align:right";><button id="15" class="button" onclick="SetCell(this)">+</button></div>
+		</td>			
+		<td class = "tuesday">
+			<div id="cell16"></div>
+			<div style="text-align:right";><button id="16" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "wednesday">
+			<div id="cell17"></div>
+			<div style="text-align:right";><button id="17" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "thursday">
+			<div id="cell18"></div>
+			<div style="text-align:right";><button id="18" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "friday">
+			<div id="cell19"></div>
+			<div style="text-align:right";><button id="19" class="button" onclick="SetCell(this)">+</button></div>
+		</td>			
+		<td class = "saturday">
+			<div id="cell20"></div>
+			<div style="text-align:right";><button id="20" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "sunday">
+			<div id="cell21"></div>
+			<div style="text-align:right";><button id="21" class="button" onclick="SetCell(this)">+</button></div>
+		</td>	
 	</tr>
 
 	<tr>
 		<td>1200-1300</td>
-		<td class = "monday"></td>			<!--Monday-->
-		<td class = "tuesday"></td>			<!--Tuesday-->
-		<td class = "wednesday"></td>			<!--Wednesday-->
-		<td class = "thursday"></td>			<!--Thursday-->
-		<td class = "friday"></td>			<!--Friday-->
-		<td class = "saturday"></td>			<!--Saturday-->
-		<td class = "sunday">Aizah</td>		<!--Sunday-->
+		<td class = "monday">
+			<div id="cell22"></div>
+			<div style="text-align:right";><button id="22" class="button" onclick="SetCell(this)">+</button></div>
+		</td>			
+		<td class = "tuesday">
+			<div id="cell23"></div>
+			<div style="text-align:right";><button id="23" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "wednesday">
+			<div id="cell24"></div>
+			<div style="text-align:right";><button id="24" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "thursday">
+			<div id="cell25"></div>
+			<div style="text-align:right";><button id="25" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "friday">
+			<div id="cell26"></div>
+			<div style="text-align:right";><button id="26" class="button" onclick="SetCell(this)">+</button></div>
+		</td>			
+		<td class = "saturday">
+			<div id="cell27"></div>
+			<div style="text-align:right";><button id="27" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "sunday">
+			<div id="cell28"></div>
+			<div style="text-align:right";><button id="28" class="button" onclick="SetCell(this)">+</button></div>
+		</td>	
 	</tr>
 
 	<tr>
 		<td>1300-1400</td>
-		<td class = "monday"></td>			<!--Monday-->
-		<td class = "tuesday"></td>			<!--Tuesday-->
-		<td class = "wednesday"></td>			<!--Wednesday-->
-		<td class = "thursday"></td>			<!--Thursday-->
-		<td class = "friday"></td>			<!--Friday-->
-		<td class = "saturday">Aizah</td>		<!--Saturday-->
-		<td class = "sunday">Hooriyah</td>	<!--Sunday-->
+		<td class = "monday">
+			<div id="cell29"></div>
+			<div style="text-align:right";><button id="29" class="button" onclick="SetCell(this)">+</button></div>
+		</td>			
+		<td class = "tuesday">
+			<div id="cell30"></div>
+			<div style="text-align:right";><button id="30" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "wednesday">
+			<div id="cell31"></div>
+			<div style="text-align:right";><button id="31" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "thursday">
+			<div id="cell32"></div>
+			<div style="text-align:right";><button id="32" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "friday">
+			<div id="cell33"></div>
+			<div style="text-align:right";><button id="33" class="button" onclick="SetCell(this)">+</button></div>
+		</td>			
+		<td class = "saturday">
+			<div id="cell34"></div>
+			<div style="text-align:right";><button id="34" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "sunday">
+			<div id="cell35"></div>
+			<div style="text-align:right";><button id="35" class="button" onclick="SetCell(this)">+</button></div>
+		</td>	
 	</tr>
 
 	<tr>
 		<td>1400-1500</td>
-		<td class = "monday"></td>			<!--Monday-->
-		<td class = "tuesday"></td>			<!--Tuesday-->
-		<td class = "wednesday"></td>			<!--Wednesday-->
-		<td class = "thursday"></td>			<!--Thursday-->
-		<td class = "friday"></td>			<!--Friday-->
-		<td class = "saturday">Hooriyah</td>	<!--Saturday-->
-		<td class = "sunday"></td>			<!--Sunday-->
+		<td class = "monday">
+			<div id="cell36"></div>
+			<div style="text-align:right";><button id="36" class="button" onclick="SetCell(this)">+</button></div>
+		</td>			
+		<td class = "tuesday">
+			<div id="cell37"></div>
+			<div style="text-align:right";><button id="37" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "wednesday">
+			<div id="cell38"></div>
+			<div style="text-align:right";><button id="38" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "thursday">
+			<div id="cell39"></div>
+			<div style="text-align:right";><button id="39" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "friday">
+			<div id="cell40"></div>
+			<div style="text-align:right";><button id="40" class="button" onclick="SetCell(this)">+</button></div>
+		</td>			
+		<td class = "saturday">
+			<div id="cell41"></div>
+			<div style="text-align:right";><button id="41" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "sunday">
+			<div id="cell42"></div>
+			<div style="text-align:right";><button id="42" class="button" onclick="SetCell(this)">+</button></div>
+		</td>	
 	</tr>
 
 	<tr>
 		<td>1500-1600</td>
-		<td class = "monday"></td>			<!--Monday-->
-		<td class = "tuesday"></td>			<!--Tuesday-->
-		<td class = "wednesday"></td>			<!--Wednesday-->
-		<td class = "thursday"></td>			<!--Thursday-->
-		<td class = "friday"></td>			<!--Friday-->
-		<td class = "saturday"></td>			<!--Saturday-->
-		<td class = "sunday">Seerat</td>		<!--Sunday-->
+		<td class = "monday">
+			<div id="cell43"></div>
+			<div style="text-align:right";><button id="43" class="button" onclick="SetCell(this)">+</button></div>
+		</td>			
+		<td class = "tuesday">
+			<div id="cell44"></div>
+			<div style="text-align:right";><button id="44" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "wednesday">
+			<div id="cell45"></div>
+			<div style="text-align:right";><button id="45" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "thursday">
+			<div id="cell46"></div>
+			<div style="text-align:right";><button id="46" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "friday">
+			<div id="cell47"></div>
+			<div style="text-align:right";><button id="47" class="button" onclick="SetCell(this)">+</button></div>
+		</td>			
+		<td class = "saturday">
+			<div id="cell48"></div>
+			<div style="text-align:right";><button id="48" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "sunday">
+			<div id="cell49"></div>
+			<div style="text-align:right";><button id="49" class="button" onclick="SetCell(this)">+</button></div>
+		</td>	
 	</tr>
 
 	<tr>
 		<td>1600-1700</td>
-		<td class = "monday"></td>			<!--Monday-->
-		<td class = "tuesday"></td>			<!--Tuesday-->
-		<td class = "wednesday"></td>			<!--Wednesday-->
-		<td class = "thursday">Harleen</td>	<!--Thursday-->
-		<td class = "friday">Harleen</td>	<!--Friday-->
-		<td class = "saturday">Harleen</td>	<!--Saturday-->
-		<td class = "sunday"></td>			<!--Sunday-->
+		<td class = "monday">
+			<div id="cell50"></div>
+			<div style="text-align:right";><button id="50" class="button" onclick="SetCell(this)">+</button></div>
+		</td>			
+		<td class = "tuesday">
+			<div id="cell51"></div>
+			<div style="text-align:right";><button id="51" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "wednesday">
+			<div id="cell52"></div>
+			<div style="text-align:right";><button id="52" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "thursday">
+			<div id="cell53"></div>
+			<div style="text-align:right";><button id="53" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "friday">
+			<div id="cell54"></div>
+			<div style="text-align:right";><button id="54" class="button" onclick="SetCell(this)">+</button></div>
+		</td>			
+		<td class = "saturday">
+			<div id="cell55"></div>
+			<div style="text-align:right";><button id="55" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "sunday">
+			<div id="cell56"></div>
+			<div style="text-align:right";><button id="56" class="button" onclick="SetCell(this)">+</button></div>
+		</td>	
 	</tr>
 
 	<tr>
 		<td>1700-1800</td>
-		<td class = "monday">Jesse</td>		<!--Monday-->
-		<td class = "tuesday">Ewan</td>		<!--Tuesday-->
-		<td class = "wednesday">Jesse</td>		<!--Wednesday-->
-		<td class = "thursday">Jesse</td>		<!--Thursday-->
-		<td class = "friday"></td>			<!--Friday-->
-		<td class = "saturday">Harleen</td>	<!--Saturday-->
-		<td class = "sunday"></td>			<!--Sunday-->
+		<td class = "monday">
+			<div id="cell57"></div>
+			<div style="text-align:right";><button id="57" class="button" onclick="SetCell(this)">+</button></div>
+		</td>			
+		<td class = "tuesday">
+			<div id="cell58"></div>
+			<div style="text-align:right";><button id="58" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "wednesday">
+			<div id="cell59"></div>
+			<div style="text-align:right";><button id="59" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "thursday">
+			<div id="cell60"></div>
+			<div style="text-align:right";><button id="60" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "friday">
+			<div id="cell61"></div>
+			<div style="text-align:right";><button id="61" class="button" onclick="SetCell(this)">+</button></div>
+		</td>			
+		<td class = "saturday">
+			<div id="cell62"></div>
+			<div style="text-align:right";><button id="62" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "sunday">
+			<div id="cell63"></div>
+			<div style="text-align:right";><button id="63" class="button" onclick="SetCell(this)">+</button></div>
+		</td>	
 	</tr>
 
 	<tr>
 		<td>1800-1900</td>
-		<td class = "monday">Ewan</td>		<!--Monday-->
-		<td class = "tuesday">Harleen</td>	<!--Tuesday-->
-		<td class = "wednesday">Harleen</td>	<!--Wednesday-->
-		<td class = "thursday">Ewan</td>		<!--Thursday-->
-		<td class = "friday"></td>			<!--Friday-->
-		<td class = "saturday">Seerat</td>		<!--Saturday-->
-		<td class = "sunday"></td>			<!--Sunday-->
+		<td class = "monday">
+			<div id="cell64"></div>
+			<div style="text-align:right";><button id="64" class="button" onclick="SetCell(this)">+</button></div>
+		</td>			
+		<td class = "tuesday">
+			<div id="cell65"></div>
+			<div style="text-align:right";><button id="65" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "wednesday">
+			<div id="cell66"></div>
+			<div style="text-align:right";><button id="66" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "thursday">
+			<div id="cell67"></div>
+			<div style="text-align:right";><button id="67" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "friday">
+			<div id="cell68"></div>
+			<div style="text-align:right";><button id="68" class="button" onclick="SetCell(this)">+</button></div>
+		</td>			
+		<td class = "saturday">
+			<div id="cell69"></div>
+			<div style="text-align:right";><button id="69" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "sunday">
+			<div id="cell70"></div>
+			<div style="text-align:right";><button id="70" class="button" onclick="SetCell(this)">+</button></div>
+		</td>	
 	</tr>
 
 	<tr>
 		<td>1900-2000</td>
-		<td class = "monday">Wisam</td>		<!--Monday-->
-		<td class = "tuesday">Gurtegh</td>	<!--Tuesday-->
-		<td class = "wednesday">Gurtegh</td>	<!--Wednesday-->
-		<td class = "thursday">Wisam</td>		<!--Thursday-->
-		<td class = "friday">Gurtegh</td>	<!--Friday-->
-		<td class = "saturday"></td>			<!--Saturday-->
-		<td class = "sunday"></td>			<!--Sunday-->
+		<td class = "monday">
+			<div id="cell71"></div>
+			<div style="text-align:right";><button id="71" class="button" onclick="SetCell(this)">+</button></div>
+		</td>			
+		<td class = "tuesday">
+			<div id="cell72"></div>
+			<div style="text-align:right";><button id="72" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "wednesday">
+			<div id="cell73"></div>
+			<div style="text-align:right";><button id="73" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "thursday">
+			<div id="cell74"></div>
+			<div style="text-align:right";><button id="74" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "friday">
+			<div id="cell75"></div>
+			<div style="text-align:right";><button id="75" class="button" onclick="SetCell(this)">+</button></div>
+		</td>			
+		<td class = "saturday">
+			<div id="cell76"></div>
+			<div style="text-align:right";><button id="76" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "sunday">
+			<div id="cell77"></div>
+			<div style="text-align:right";><button id="77" class="button" onclick="SetCell(this)">+</button></div>
+		</td>	
 	</tr>
 
 	<tr>
 		<td>2000-2100</td>
-		<td class = "monday">Harvi</td>		<!--Monday-->
-		<td class = "tuesday"></td>			<!--Tuesday-->
-		<td class = "wednesday">Harvi</td>		<!--Wednesday-->
-		<td class = "thursday"></td>			<!--Thursday-->
-		<td class = "friday">Harvi</td>		<!--Friday-->
-		<td class = "saturday"></td>			<!--Saturday-->
-		<td class = "sunday"></td>			<!--Sunday-->
+		<td class = "monday">
+			<div id="cell78"></div>
+			<div style="text-align:right";><button id="78" class="button" onclick="SetCell(this)">+</button></div>
+		</td>			
+		<td class = "tuesday">
+			<div id="cell79"></div>
+			<div style="text-align:right";><button id="79" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "wednesday">
+			<div id="cell80"></div>
+			<div style="text-align:right";><button id="80" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "thursday">
+			<div id="cell81"></div>
+			<div style="text-align:right";><button id="81" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "friday">
+			<div id="cell82"></div>
+			<div style="text-align:right";><button id="82" class="button" onclick="SetCell(this)">+</button></div>
+		</td>			
+		<td class = "saturday">
+			<div id="cell83"></div>
+			<div style="text-align:right";><button id="83" class="button" onclick="SetCell(this)">+</button></div>
+		</td>		
+		<td class = "sunday">
+			<div id="cell84"></div>
+			<div style="text-align:right";><button id="84" class="button" onclick="SetCell(this)">+</button></div>
+		</td>	
 	</tr>
 
 </table>
 
-<h2>Week of 11.18</h2>
+<h2 class="center">Week of 11.18</h2>
 
-<table style="width: 100%">
+<table class="center">
 	<tr>
 		<th>Time</th>
 		<th>Monday</th>
@@ -460,6 +723,20 @@
 </table>
 
 <script>
+	function SetCell(btn) {
+		let cellname = "cell"+btn.id;
+		let text;
+	 	let person = prompt("Please enter name:");
+	  	if (person == null || person == "") {
+	    	text = "";
+	  	} 
+	  	else {
+	    	text = person;
+	  	}
+	 	document.getElementById(cellname).innerHTML = text;
+	}
+
+
 	let date = new Date();
 	let dayofweeknumber = date.getDay();
 	let nameOfDay;
@@ -497,6 +774,7 @@
 	for (var i = 0; i < 13; i++) {
 		document.getElementsByClassName(nameOfDay)[i].style.backgroundColor = "yellow";
 	}
+	
 
 </script> 
 
