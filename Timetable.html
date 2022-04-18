@@ -1,32 +1,70 @@
 <!DOCTYPE html>
 <html>
 <style>
-	table, th, td {
+	table {
 		border:  1px solid black;
+		border-collapse: collapse;	/*no borders*/
+		width: 75%;
+		margin-left: auto;
+  		margin-right: auto;
+  		font-family: "Gill Sans", sans-serif;
+  		z-index: 1;				/*table is over the highlight*/
+  		overflow: hidden;		/*cuts off the column highlight as to not overflow*/
 	}
-	.button {
+
+	h2 {
+		width: 75%;
+		margin-left: auto;
+  		margin-right: auto;
+  		font-family: "Gill Sans", sans-serif;
+
+	}
+	td, th {
+		cursor: pointer;
+		padding: 5px;
+		position: relative;
+		text-align: center;
+	}
+
+	.button {					/*format of + buttons*/
 		border: none;
 		color: blue;
 		padding: 1px 2px;
 		text-align: center;
-		text-decoration: none;
-		display: inline-block;
-		font-size: 100%;
+		font-size: 12px;
 		margin: 1px 1px;
 		cursor: pointer;
 	}
-	.center {
-		width:  75%;
-		margin-left: auto;
-  		margin-right: auto;
+
+	.buttonalign {				/*puts the button on the rightmost of the cell*/
+		text-align: right;		
 	}
+
+	tr:hover {					/*highlights rows*/
+		background-color: rgba(195, 164, 255, 0.25);
+		z-index: -1;
+	}
+
+	td:hover::after { 			/*highlights columns*/
+	    background-color: rgba(195, 164, 255, 0.25);
+	    content: '\00a0';  
+	    height: 10000px;    
+	    left: 0;
+	    position: absolute;  
+	    top: -5000px;
+	    width: 100%;
+	    z-index: -1;
+	}
+
+
+
 </style>
 
 <body onload="addButtons()">
 
-<h2 class="center">Timetable</h2>
+<h2>Timetable</h2>
 
-<table class="center">
+<table>
 	<tr>
 		<th>Time</th>
 		<th>Monday</th>
@@ -172,9 +210,9 @@
 
 </table>
 
-<h2 class="center">Week of 11.11</h2>
+<h2>This week</h2>
 
-<table class="center">
+<table>
 	<tr>
 		<th>Time</th>
 		<th class = "monday">Monday</th>
@@ -320,9 +358,9 @@
 
 </table>
 
-<h2 class="center">Week of 11.18</h2>
+<h2>Next Week</h2>
 
-<table class="center">
+<table>
 	<tr>
 		<th>Time</th>
 		<th>Monday</th>
@@ -348,7 +386,7 @@
 	<tr>
 		<th>1000-1100</th>
 		<td></td>			<!--Monday-->
-		<td>Jia</td>		<!--Tuesday-->
+		<td>Jia</td>			<!--Tuesday-->
 		<td>Gurtegh</td>	<!--Wednesday-->
 		<td>Gurtegh</td>	<!--Thursday-->
 		<td></td>			<!--Friday-->
