@@ -1,59 +1,69 @@
 <!DOCTYPE html>
 <html>
 <style>
+	body {
+		background-color: ghostwhite;
+	}
 	table {
-		border:  1px solid black;
+		border:  3px solid white;
 		border-collapse: collapse;	/*no borders*/
-		width: 75%;
+		width: 1500px;
 		margin-left: auto;
   		margin-right: auto;
   		font-family: "Gill Sans", sans-serif;
   		z-index: 1;				/*table is over the highlight*/
   		overflow: hidden;		/*cuts off the column highlight as to not overflow*/
+  		border-radius: 20px;	/*rounded corners*/
+  		box-shadow: 5px 10px 50px rgba(0, 0, 0, 0.25); /*offset, offset, blur, colour of shadow*/
 	}
 
 	h2 {
-		width: 75%;
+		width: 1500px;			/*same width of table so it aligns*/
 		margin-left: auto;
   		margin-right: auto;
   		font-family: "Gill Sans", sans-serif;
+  		text-align: center;
 
 	}
 	td, th {
 		cursor: pointer;
-		padding: 5px;
+		padding: 20px;
 		position: relative;
 		text-align: center;
+		width: 12.5%;			/*equal width for all columns*/
+	}
+
+	th {
+		background-color: #354863 !important;	/*colour will stay the same even on hover*/
+		color: #FFFFFF;
+		text-transform: uppercase;
 	}
 
 	.button {					/*format of + buttons*/
 		border: none;
-		color: blue;
+		color: #354863;
 		padding: 1px 2px;
 		text-align: center;
 		font-size: 12px;
 		margin: 1px 1px;
 		cursor: pointer;
-	}
-
-	.buttonalign {				/*puts the button on the rightmost of the cell*/
-		text-align: right;		
+		float: right;
 	}
 
 	tr:hover {					/*highlights rows*/
 		background-color: rgba(195, 164, 255, 0.25);
-		z-index: -1;
+		z-index: -1;			/*behind the table*/
 	}
 
 	td:hover::after { 			/*highlights columns*/
 	    background-color: rgba(195, 164, 255, 0.25);
-	    content: '\00a0';  
-	    height: 10000px;    
+	    content: "";			/*content that needs to be highlighted*/
+	    height: 10000px;    	/*size of the content*/
 	    left: 0;
 	    position: absolute;  
 	    top: -5000px;
 	    width: 100%;
-	    z-index: -1;
+	    z-index: -1;			/*behind the table*/
 	}
 
 
@@ -210,7 +220,7 @@
 
 </table>
 
-<h2>This week</h2>
+<h2>This Week</h2>
 
 <table>
 	<tr>
@@ -516,7 +526,7 @@
 		var tds = document.getElementsByTagName("td");
 
 		for ( var index = 0; index < tds.length; index++) {
-			tds[index].innerHTML = '<div id="cell' + index + '"></div>' + tds[index].innerHTML + '<div class="buttonalign";><button id="' + index + '" class="button" onclick="SetCell(this)">+</button></div>';
+			tds[index].innerHTML = '<section id="cell' + index + '">' + tds[index].innerHTML + '<button id="' + index + '" class="button" onclick="SetCell(this)">+</button></section>';
 		}
 	}
 
@@ -525,10 +535,10 @@
 		let text;
 	 	let person = prompt("Please enter name:");
 	  	if (person == null || person == "") {
-	    	text = "";
+	    	text = '<button id="' + btn.id + '" class="button" onclick="SetCell(this)">+</button>';
 	  	} 
 	  	else {
-	    	text = person;
+	    	text = person + '<button id="' + btn.id + '" class="button" onclick="SetCell(this)">+</button>';
 	  	}
 	 	document.getElementById(cellname).innerHTML = text;		//Saves it to the cell# that triggered the function.
 	}
@@ -569,10 +579,8 @@
 	}
 
 	for (var i = 0; i < 13; i++) {		//highlights current day in second table
-		document.getElementsByClassName(nameOfDay)[i].style.backgroundColor = "rgba(195, 164, 255, 0.25)";
+		document.getElementsByClassName(nameOfDay)[i].style.backgroundColor = "rgba(195, 164, 255, 0.5)";
 	}
-	
-	
 
 </script> 
 
