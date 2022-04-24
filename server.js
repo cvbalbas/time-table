@@ -1,8 +1,10 @@
 const express = require('express');
 const app = express();
 
+app.set('view engine', 'ejs')
+
 app.get('/', function(request, response){
-    response.sendFile('C:/Users/User/Desktop/time-table/Timetable.html');
+    response.render('timetable', {c0:"Somebody"});
 });
 
 var server = app.listen(3000, function () {
