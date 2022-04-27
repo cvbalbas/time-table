@@ -506,8 +506,7 @@
 
 </table>
 
-
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
 	function addButtons(){				//add buttons and unique btn ID for each using a for loop instead of copy paste within html
@@ -518,12 +517,12 @@
             var data = <%- JSON.stringify(data) %>;
             console.log(data)
 
-			tds[index].innerHTML = '<div id="cell' + index + '">'+data[0]["c"+index.toString()]+'</div>' + tds[index].innerHTML + '<div class="buttonalign";><button id="' + index + '" class="button" onclick="SetCell(this)">+</button></div>';
+			tds[index].innerHTML = '<div id="c' + index + '">'+data[0]["c"+index.toString()]+'</div>' + tds[index].innerHTML + '<div class="buttonalign";><button id="' + index + '" class="button" onclick="SetCell(this)">+</button></div>';
 		}
 	}
 
 	function SetCell(btn) {				//when button is clicked, a prompt shows asking for a name to add.
-		let cellname = "cell" + btn.id;
+		let cellname = "c" + btn.id;
 		let text;
 	 	let person = prompt("Please enter name:");
 	  	if (person == null || person == "") {
@@ -533,7 +532,14 @@
 	    	text = person;
 	  	}
 	 	document.getElementById(cellname).innerHTML = text;		//Saves it to the cell# that triggered the function.
+
+         $.ajax({
+	        type: 'POST',
+	        url: 'http://localhost:3000/updateTimetableTable',
+	        data: {'student':text, 'cell':cellname}
+    	});
 	}
+
 
 
 	let date = new Date();					//gets current day

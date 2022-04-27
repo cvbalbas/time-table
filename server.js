@@ -1,9 +1,12 @@
 const express = require('express');
+var bodyParser = require('body-parser');
 const app = express();
 const mysql = require("mysql"); //need to install mysql
-var data;
+
 
 app.set('view engine', 'ejs')
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
 var server = app.listen(3000, function () {
    var host = server.address().address
@@ -18,12 +21,20 @@ con.connect(function(err) { //connects to database you specified
     console.log("Connected!");
 });
 
+var data;
+getDataFromTimetableTable()
+
 app.get('/', function(request, response){
-    getDataFromTimetableTable()
     response.render('timetable', {data:data});
-    console.log(data)
 });
 
+
+app.post("/updateTimetableTable", function (request, response){
+    var student = request.body.student
+	var cell = request.body.cell
+    updateTimetableTable(cell, student)
+    getDataFromTimetableTable()
+})
 
 
 
@@ -46,3 +57,10 @@ function getDataFromTimetableTable(){
     })
 }
 
+function updateTimetableTable(cell, student){
+    var sql = "UPDATE timetable SET `"+cell+"` = '"+student+"'";
+    con.query(sql, function (err, result) {
+        if (err) throw err;
+        console.log(result.affectedRows + " record(s) updated");
+      });
+}
