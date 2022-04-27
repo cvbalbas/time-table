@@ -22,19 +22,10 @@ con.connect(function(err) { //connects to database you specified
 });
 
 var data;
-getDataFromTimetableTable()
+var fns = {getDataFromTimetableTable: getDataFromTimetableTable, updateTimetableTable:updateTimetableTable}
 
-app.get('/', function(request, response){
-    response.render('timetable', {data:data});
-});
-
-
-app.post("/updateTimetableTable", function (request, response){
-    var student = request.body.student
-	var cell = request.body.cell
-    updateTimetableTable(cell, student)
-    getDataFromTimetableTable()
-})
+const routes = require("./routes");
+routes.router(app, fns);
 
 
 
@@ -48,12 +39,14 @@ app.post("/updateTimetableTable", function (request, response){
 
 
 
-function getDataFromTimetableTable(){
+
+function getDataFromTimetableTable(callback){
     var sql = "SELECT * FROM timetable"; //we want to get everything from timetable TABLE
     con.query(sql, function (err, result) { 
         if (err) throw err;
         console.log("Result: " + JSON.stringify(result)); 
         data = result;
+        callback(data)
     })
 }
 
