@@ -1,4 +1,4 @@
-module.exports = {router}
+module.exports = router
 const {updateTimetableTable, getDataFromTimetableTable} = require("./services")
 
 function router(app){
@@ -11,6 +11,5 @@ function router(app){
         var student = request.body.student
         var cell = request.body.cell
         updateTimetableTable(cell, student)
-        getDataFromTimetableTable(function (data){})
     })
 }
