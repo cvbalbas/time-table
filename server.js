@@ -1,7 +1,9 @@
 const express = require('express');
 var bodyParser = require('body-parser');
 const app = express();
-const mysql = require("mysql"); //need to install mysql
+const mysql = require("mysql");
+const router = require("./routes");
+const WebSocket = require('ws')
 
 
 app.set('view engine', 'ejs')
@@ -15,5 +17,16 @@ var server = app.listen(3000, function () {
    console.log("Listening at http://%s:%s", host, port)
 })
 
-const router = require("./routes");
 router(app);
+
+const wss = new WebSocket.Server({ port: 8080 })
+ 
+wss.on('connection', function connection(ws) {
+    ws.on('message', function incoming(message) {
+        if (message = "refresh"){
+            wss.clients.forEach(function each(client) {
+                client.send("refresh");
+            });
+        }   
+    })
+})
