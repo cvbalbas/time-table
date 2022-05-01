@@ -5,7 +5,6 @@ function getDataFromTimetableTable(callback){
     var sql = "SELECT * FROM timetable"; 
     con.query(sql, function (err, result) { 
         if (err) throw err;
-        console.log("Result: " + JSON.stringify(result)); 
         data = result;
         callback(data)
     })

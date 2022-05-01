@@ -587,15 +587,18 @@
     const connection = new WebSocket(url)
     
     connection.onmessage = (e) => {
-    if (e.data == "refresh"){
+    if (e.data != clientId.toString()){
         location.reload()
     }else{
     console.log(e.data)
     }
     }
 
+	
+	var clientId = Math.random(1)
+
     function sendRefreshMessageToServer(){
-        connection.send("refresh")
+        connection.send(clientId)
     }
 
 </script> 
