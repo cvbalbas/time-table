@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html>
+<style>
+	table {
+		border:  1px solid black;
+		border-collapse: collapse;	/*no borders*/
+		width: 75%;
+		margin-left: auto;
+  		margin-right: auto;
+  		font-family: "Gill Sans", sans-serif;
+  		z-index: 1;				/*table is over the highlight*/
+  		overflow: hidden;		/*cuts off the column highlight as to not overflow*/
+	}
+
+	h2 {
+		width: 75%;
+		margin-left: auto;
+  		margin-right: auto;
+  		font-family: "Gill Sans", sans-serif;
+
+	}
+	td, th {
+		cursor: pointer;
+		padding: 5px;
+		position: relative;
+		text-align: center;
+	}
+
+	.button {					/*format of + buttons*/
+		border: none;
+		color: blue;
+		padding: 1px 2px;
+		text-align: center;
+		font-size: 12px;
+		margin: 1px 1px;
+		cursor: pointer;
+	}
+
+	.buttonalign {				/*puts the button on the rightmost of the cell*/
+		text-align: right;		
+	}
+
+	tr:hover {					/*highlights rows*/
+		background-color: rgba(195, 164, 255, 0.25);
+		z-index: -1;
+	}
+
+	td:hover::after { 			/*highlights columns*/
+	    background-color: rgba(195, 164, 255, 0.25);
+	    content: '\00a0';  
+	    height: 10000px;    
+	    left: 0;
+	    position: absolute;  
+	    top: -5000px;
+	    width: 100%;
+	    z-index: -1;
+	}
+
+
+
+</style>
+
+<body onload="addButtons()">
+
+<h2><Timetable></h2>
+
+<table>
+	<tr>
+		<th>Time</th>
+		<th>Monday</th>
+		<th>Tuesday</th>
+		<th>Wednesday</th>
+		<th>Thursday</th>
+		<th>Friday</th>
+		<th>Saturday</th>
+		<th>Sunday</th>
+	</tr>
+
+	<tr>
+		<th>0900-1000</th>
+		<td><%= c0 %></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td>Jia</td>
+		<td>Jesse</td>
+	</tr>
+
+	<tr>
+		<th>1000-1100</th>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td>Jia</td>
+		<td>Kaidan</td>
+	</tr>
+
+	<tr>
+		<th>1100-1200</th>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td>Kaidan</td>
+	</tr>
+
+	<tr>
+		<th>1200-1300</th>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td>Aizah</td>
+	</tr>
+
+	<tr>
+		<th>1300-1400</th>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td>Harvi</br>Aizah</td>
+		<td>Hooriyah</td>
+	</tr>
+
+	<tr>
+		<th>1400-1500</th>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td>Harvi</br>Hooriyah</td>
+		<td></td>
+	</tr>
+
+	<tr>
+		<th>1500-1600</th>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td>Seerat</td>
+	</tr>
+
+	<tr>
+		<th>1600-1700</th>
+		<td>Jayden</td>
+		<td>Jia</td>
+		<td>Ewan</td>
+		<td>Harleen</td>
+		<td>Harleen</td>
+		<td>Harleen</td>
+		<td>Harleen</td>
+	</tr>
+
+	<tr>
+		<th>1700-1800</th>
+		<td>Jesse</td>
+		<td>Ewan</td>
+		<td>Jesse</td>
+		<td>Jesse</td>
+		<td>Jayden</td>
+		<td>Harleen</td>
+		<td></td>
+	</tr>
+
+	<tr>
+		<th>1800-1900</th>
+		<td>Ewan</td>
+		<td>Harleen</td>
+		<td>Harleen</td>
+		<td>Morgan</td>
+		<td>Morgan</td>
+		<td>Seerat</td>
+		<td>Ewan</td>
+	</tr>
+
+	<tr>
+		<th>1900-2000</th>
+		<td>Wisam</td>
+		<td>Gurtegh</td>
+		<td>Gurtegh</td>
+		<td>Wisam</td>
+		<td>Gurtegh</td>
+		<td></td>
+		<td>Ewan</td>
+	</tr>
+
+	<tr>
+		<th>2000-2100</th>
+		<td>Harvi</td>
+		<td>Maya</td>
+		<td>Harvi</td>
+		<td>Jayden</td>
+		<td>Harvi</td>
+		<td></td>
+		<td></td>
+	</tr>
+
+</table>
+
+<h2>This week</h2>
+
+<table>
+	<tr>
+		<th>Time</th>
+		<th class = "monday">Monday</th>
+		<th class = "tuesday">Tuesday</th>
+		<th class = "wednesday">Wednesday</th>
+		<th class = "thursday">Thursday</th>
+		<th class = "friday">Friday</th>
+		<th class = "saturday">Saturday</th>
+		<th class = "sunday">Sunday</th>
+	</tr>
+
+	<tr>
+		<th>0900-1000</th>
+		<td class = "monday"></td>			
+		<td class = "tuesday"></td>		
+		<td class = "wednesday"></td>		
+		<td class = "thursday"></td>		
+		<td class = "friday"></td>			
+		<td class = "saturday"></td>		
+		<td class = "sunday"></td>		
+	</tr>
+
+	<tr>
+		<th>1000-1100</th>
+		<td class = "monday"></td>			
+		<td class = "tuesday"></td>		
+		<td class = "wednesday"></td>		
+		<td class = "thursday"></td>		
+		<td class = "friday"></td>			
+		<td class = "saturday"></td>		
+		<td class = "sunday"></td>	
+	</tr>
+
+	<tr>
+		<th>1100-1200</th>
+		<td class = "monday"></td>			
+		<td class = "tuesday"></td>		
+		<td class = "wednesday"></td>		
+		<td class = "thursday"></td>		
+		<td class = "friday"></td>			
+		<td class = "saturday"></td>		
+		<td class = "sunday"></td>	
+	</tr>
+
+	<tr>
+		<th>1200-1300</th>
+		<td class = "monday"></td>			
+		<td class = "tuesday"></td>		
+		<td class = "wednesday"></td>		
+		<td class = "thursday"></td>		
+		<td class = "friday"></td>			
+		<td class = "saturday"></td>		
+		<td class = "sunday"></td>	
+	</tr>
+
+	<tr>
+		<th>1300-1400</th>
+		<td class = "monday"></td>			
+		<td class = "tuesday"></td>		
+		<td class = "wednesday"></td>		
+		<td class = "thursday"></td>		
+		<td class = "friday"></td>			
+		<td class = "saturday"></td>		
+		<td class = "sunday"></td>	
+	</tr>
+
+	<tr>
+		<th>1400-1500</th>
+		<td class = "monday"></td>			
+		<td class = "tuesday"></td>		
+		<td class = "wednesday"></td>		
+		<td class = "thursday"></td>		
+		<td class = "friday"></td>			
+		<td class = "saturday"></td>		
+		<td class = "sunday"></td>	
+	</tr>
+
+	<tr>
+		<th>1500-1600</th>
+		<td class = "monday"></td>			
+		<td class = "tuesday"></td>		
+		<td class = "wednesday"></td>		
+		<td class = "thursday"></td>		
+		<td class = "friday"></td>			
+		<td class = "saturday"></td>		
+		<td class = "sunday"></td>	
+	</tr>
+
+	<tr>
+		<th>1600-1700</th>
+		<td class = "monday"></td>			
+		<td class = "tuesday"></td>		
+		<td class = "wednesday"></td>		
+		<td class = "thursday"></td>		
+		<td class = "friday"></td>			
+		<td class = "saturday"></td>		
+		<td class = "sunday"></td>	
+	</tr>
+
+	<tr>
+		<th>1700-1800</th>
+		<td class = "monday"></td>			
+		<td class = "tuesday"></td>		
+		<td class = "wednesday"></td>		
+		<td class = "thursday"></td>		
+		<td class = "friday"></td>			
+		<td class = "saturday"></td>		
+		<td class = "sunday"></td>	
+	</tr>
+
+	<tr>
+		<th>1800-1900</th>
+		<td class = "monday"></td>			
+		<td class = "tuesday"></td>		
+		<td class = "wednesday"></td>		
+		<td class = "thursday"></td>		
+		<td class = "friday"></td>			
+		<td class = "saturday"></td>		
+		<td class = "sunday"></td>	
+	</tr>
+
+	<tr>
+		<th>1900-2000</th>
+		<td class = "monday"></td>			
+		<td class = "tuesday"></td>		
+		<td class = "wednesday"></td>		
+		<td class = "thursday"></td>		
+		<td class = "friday"></td>			
+		<td class = "saturday"></td>		
+		<td class = "sunday"></td>	
+	</tr>
+
+	<tr>
+		<th>2000-2100</th>
+		<td class = "monday"></td>			
+		<td class = "tuesday"></td>		
+		<td class = "wednesday"></td>		
+		<td class = "thursday"></td>		
+		<td class = "friday"></td>			
+		<td class = "saturday"></td>		
+		<td class = "sunday"></td>	
+	</tr>
+
+</table>
+
+<h2>Next Week</h2>
+
+<table>
+	<tr>
+		<th>Time</th>
+		<th>Monday</th>
+		<th>Tuesday</th>
+		<th>Wednesday</th>
+		<th>Thursday</th>
+		<th>Friday</th>
+		<th>Saturday</th>
+		<th>Sunday</th>
+	</tr>
+
+	<tr>
+		<th>0900-1000</th>
+		<td></td>			<!--Monday-->
+		<td>Jia</td>		<!--Tuesday-->
+		<td></td>			<!--Wednesday-->
+		<td>Jia</td>		<!--Thursday-->
+		<td></td>			<!--Friday-->
+		<td></td>			<!--Saturday-->
+		<td>Jesse</td>		<!--Sunday-->
+	</tr>
+
+	<tr>
+		<th>1000-1100</th>
+		<td></td>			<!--Monday-->
+		<td>Jia</td>			<!--Tuesday-->
+		<td>Gurtegh</td>	<!--Wednesday-->
+		<td>Gurtegh</td>	<!--Thursday-->
+		<td></td>			<!--Friday-->
+		<td></td>			<!--Saturday-->
+		<td>Kaidan</td>		<!--Sunday-->
+	</tr>
+
+	<tr>
+		<th>1100-1200</th>
+		<td></td>			<!--Monday-->
+		<td></td>			<!--Tuesday-->
+		<td></td>			<!--Wednesday-->
+		<td></td>			<!--Thursday-->
+		<td></td>			<!--Friday-->
+		<td></td>			<!--Saturday-->
+		<td>Kaidan</td>		<!--Sunday-->
+	</tr>
+
+	<tr>
+		<th>1200-1300</th>
+		<td></td>			<!--Monday-->
+		<td></td>			<!--Tuesday-->
+		<td></td>			<!--Wednesday-->
+		<td></td>			<!--Thursday-->
+		<td></td>			<!--Friday-->
+		<td></td>			<!--Saturday-->
+		<td>Aizah</td>		<!--Sunday-->
+	</tr>
+
+	<tr>
+		<th>1300-1400</th>
+		<td></td>			<!--Monday-->
+		<td></td>			<!--Tuesday-->
+		<td></td>			<!--Wednesday-->
+		<td></td>			<!--Thursday-->
+		<td></td>			<!--Friday-->
+		<td>Aizah</br>
+		Harvi</td>			<!--Saturday-->
+		<td>Hooriyah</td>	<!--Sunday-->
+	</tr>
+
+	<tr>
+		<th>1400-1500</th>
+		<td></td>			<!--Monday-->
+		<td></td>			<!--Tuesday-->
+		<td></td>			<!--Wednesday-->
+		<td></td>			<!--Thursday-->
+		<td></td>			<!--Friday-->
+		<td>Hooriyah</br>
+		Harvi</td>			<!--Saturday-->
+		<td></td>			<!--Sunday-->
+	</tr>
+
+	<tr>
+		<th>1500-1600</th>
+		<td></td>			<!--Monday-->
+		<td></td>			<!--Tuesday-->
+		<td></td>			<!--Wednesday-->
+		<td></td>			<!--Thursday-->
+		<td></td>			<!--Friday-->
+		<td></td>			<!--Saturday-->
+		<td>Seerat</td>		<!--Sunday-->
+	</tr>
+
+	<tr>
+		<th>1600-1700</th>
+		<td>Eliot</td>		<!--Monday-->
+		<td></td>			<!--Tuesday-->
+		<td></td>			<!--Wednesday-->
+		<td>Harleen</td>	<!--Thursday-->
+		<td>Harleen</td>	<!--Friday-->
+		<td>Harleen</td>	<!--Saturday-->
+		<td>Harleen</td>	<!--Sunday-->
+	</tr>
+
+	<tr>
+		<th>1700-1800</th>
+		<td>Jesse</td>		<!--Monday-->
+		<td></td>			<!--Tuesday-->
+		<td>Jesse</td>		<!--Wednesday-->
+		<td>Jesse</td>		<!--Thursday-->
+		<td></td>			<!--Friday-->
+		<td>Harleen</td>	<!--Saturday-->
+		<td></td>			<!--Sunday-->
+	</tr>
+
+	<tr>
+		<th>1800-1900</th>
+		<td>Harleen</td>	<!--Monday-->
+		<td>Harleen</td>	<!--Tuesday-->
+		<td>Harleen</td>	<!--Wednesday-->
+		<td></td>			<!--Thursday-->
+		<td></td>			<!--Friday-->
+		<td>Seerat</td>		<!--Saturday-->
+		<td>Ewan</td>		<!--Sunday-->
+	</tr>
+
+	<tr>
+		<th>1900-2000</th>
+		<td>Wisam</td>		<!--Monday-->
+		<td>Gurtegh</td>	<!--Tuesday-->
+		<td>Gurtegh</td>	<!--Wednesday-->
+		<td>Wisam</td>		<!--Thursday-->
+		<td>Gurtegh</td>	<!--Friday-->
+		<td></td>			<!--Saturday-->
+		<td>Ewan</td>		<!--Sunday-->
+	</tr>
+
+	<tr>
+		<th>2000-2100</th>
+		<td>Harvi</td>		<!--Monday-->
+		<td>Maya</td>		<!--Tuesday-->
+		<td>Harvi</td>		<!--Wednesday-->
+		<td></td>			<!--Thursday-->
+		<td>Harvi</td>		<!--Friday-->
+		<td></td>			<!--Saturday-->
+		<td></td>			<!--Sunday-->
+	</tr>
+
+</table>
+
+
+
+
+<script>
+	function addButtons(){				//add buttons and unique btn ID for each using a for loop instead of copy paste within html
+		var tds = document.getElementsByTagName("td");
+
+		for ( var index = 0; index < tds.length; index++) {
+			tds[index].innerHTML = '<div id="cell' + index + '"></div>' + tds[index].innerHTML + '<div class="buttonalign";><button id="' + index + '" class="button" onclick="SetCell(this)">+</button></div>';
+		}
+	}
+
+	function SetCell(btn) {				//when button is clicked, a prompt shows asking for a name to add.
+		let cellname = "cell" + btn.id;
+		let text;
+	 	let person = prompt("Please enter name:");
+	  	if (person == null || person == "") {
+	    	text = "";
+	  	} 
+	  	else {
+	    	text = person;
+	  	}
+	 	document.getElementById(cellname).innerHTML = text;		//Saves it to the cell# that triggered the function.
+	}
+
+
+	let date = new Date();					//gets current day
+	let dayofweeknumber = date.getDay();
+	let nameOfDay;
+
+	switch(dayofweeknumber) {
+		case 0: 
+        	nameOfDay = 'sunday';
+        	break;
+
+   		case 1:
+        	nameOfDay = 'monday';
+        	break;
+
+    	case 2:
+        	nameOfDay = 'tuesday';
+        	break;
+
+    	case 3:
+        	nameOfDay = 'wednesday';
+        	break;
+
+    	case 4:
+        	nameOfDay = 'thursday';
+        	break;
+
+    	case 5:
+        	nameOfDay = 'friday';
+        	break;
+
+    	case 6:
+        	nameOfDay = 'saturday';
+        	break;
+	}
+
+	for (var i = 0; i < 13; i++) {		//highlights current day in second table
+		document.getElementsByClassName(nameOfDay)[i].style.backgroundColor = "rgba(195, 164, 255, 0.25)";
+	}
+	
+	
+
+</script> 
+
+</body>
+</html>
