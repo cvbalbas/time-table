@@ -15,5 +15,5 @@ var server = app.listen(3000, function () {
    console.log("Listening at http://%s:%s", host, port)
 })
 
-const routes = require("./routes");
-routes.router(app);
+const router = require("./routes");
+router(app);
