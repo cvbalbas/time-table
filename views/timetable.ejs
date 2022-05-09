@@ -13,23 +13,24 @@
 			background-color: ghostwhite;
 		}
 		table {
-			border:  1px solid white;
-			/*border-collapse: collapse;	/*no borders*/
-			width: 1500px;
+			border:  3px solid white;
+			border-collapse: collapse;	/*no borders*/
+			width: 80%;
 			margin-left: auto;
 	  		margin-right: auto;
 	  		font-family: "Gill Sans", sans-serif;
 	  		z-index: 1;				/*table is over the highlight*/
 	  		overflow: hidden;		/*cuts off the column highlight as to not overflow*/
-	  		border-radius: 20px;
-	  		box-shadow: 5px 10px 50px rgba(0, 0, 0, 0.25);
+	  		border-radius: 20px;	/*rounded corners*/
+	  		box-shadow: 5px 10px 50px rgba(0, 0, 0, 0.25); /*offset, offset, blur, colour of shadow*/
 		}
 
 		h2 {
-			width: 1500px;
+			width: 80%;			/*same width of table so it aligns*/
 			margin-left: auto;
 	  		margin-right: auto;
 	  		font-family: "Gill Sans", sans-serif;
+	  		text-align: center;
 		}
 
 		td, th {
@@ -37,18 +38,18 @@
 			padding: 20px;
 			position: relative;
 			text-align: center;
-			width: 12.5%;
+			width: 12.5%;			/*equal width for all columns*/
 		}
 
 		th {
-			background-color: #354863 !important;
+			background-color: #354863 !important;	/*colour will stay the same even on hover*/
 			color: #FFFFFF;
 			text-transform: uppercase;
 		}
 
 		.button {					/*format of + buttons*/
 			border: none;
-			color: blue;
+			color: #354863;
 			padding: 1px 2px;
 			text-align: center;
 			font-size: 12px;
@@ -57,24 +58,20 @@
 			float: right;
 		}
 
-		/* .buttonalign {	/*puts the button on the rightmost of the cell
-			text-align: right;		
-		} */
-
 		tr:hover {					/*highlights rows*/
 			background-color: rgba(195, 164, 255, 0.25);
-			z-index: -1;
+			z-index: -1;			/*behind the table*/
 		}
 
 		td:hover::after { 			/*highlights columns*/
 		    background-color: rgba(195, 164, 255, 0.25);
-		    content: "";
-		    height: 10000px;    
+		    content: "";			/*content that needs to be highlighted*/
+		    height: 10000px;    	/*size of the content*/
 		    left: 0;
 		    position: absolute;  
 		    top: -5000px;
 		    width: 100%;
-		    z-index: -1;
+		    z-index: -1;			/*behind the table*/
 		}
 		.chevron {
 			margin-left: auto;
@@ -86,6 +83,7 @@
 
 <body onload="addButtons()">
     <!-- Left and right controls -->
+    <button onclick="AddTable()">Add table</button>
     <div class="chevron">
 	    <a href="#myCarousel" data-slide="prev">
 	    	<span class="glyphicon glyphicon-chevron-left"></span>
@@ -98,157 +96,8 @@
 	</div>
 	<!--start of carousel-->
 	<div id="myCarousel" class="carousel slide" data-interval="false">
-	    <div class="carousel-inner">
+	    <div id = "tables" class="carousel-inner">
 	      	<div class="item active">
-		        <h2>Timetable</h2>
-				<table>
-					<tr>
-						<th>Time</th>
-						<th>Monday</th>
-						<th>Tuesday</th>
-						<th>Wednesday</th>
-						<th>Thursday</th>
-						<th>Friday</th>
-						<th>Saturday</th>
-						<th>Sunday</th>
-					</tr>
-
-					<tr>
-						<th>0900-1000</th>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-
-					<tr>
-						<th>1000-1100</th>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-
-					<tr>
-						<th>1100-1200</th>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-
-					<tr>
-						<th>1200-1300</th>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-
-					<tr>
-						<th>1300-1400</th>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-
-					<tr>
-						<th>1400-1500</th>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-
-					<tr>
-						<th>1500-1600</th>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-
-					<tr>
-						<th>1600-1700</th>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-
-					<tr>
-						<th>1700-1800</th>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-
-					<tr>
-						<th>1800-1900</th>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-
-					<tr>
-						<th>1900-2000</th>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-
-					<tr>
-						<th>2000-2100</th>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-				</table>
-	      	</br></br></br>
-	      	</div>
-	      	
-	      	<div class="item">
 		      	<h2>This Week</h2>
 				<table>
 					<tr>
@@ -396,164 +245,16 @@
 				</table>
 	      	</br></br></br>
 	      	</div>
-	    	
 
-	    	<div class="item">
-		        <h2>Next Week</h2>
-				<table>
-					<tr>
-						<th>Time</th>
-						<th>Monday</th>
-						<th>Tuesday</th>
-						<th>Wednesday</th>
-						<th>Thursday</th>
-						<th>Friday</th>
-						<th>Saturday</th>
-						<th>Sunday</th>
-					</tr>
-
-					<tr>
-						<th>0900-1000</th>
-						<td></td>			<!--Monday-->
-						<td></td>			<!--Tuesday-->
-						<td></td>			<!--Wednesday-->
-						<td></td>			<!--Thursday-->
-						<td></td>			<!--Friday-->
-						<td></td>			<!--Saturday-->
-						<td></td>			<!--Sunday-->
-					</tr>
-
-					<tr>
-						<th>1000-1100</th>
-						<td></td>			<!--Monday-->
-						<td></td>			<!--Tuesday-->
-						<td></td>			<!--Wednesday-->
-						<td></td>			<!--Thursday-->
-						<td></td>			<!--Friday-->
-						<td></td>			<!--Saturday-->
-						<td></td>			<!--Sunday-->
-					</tr>
-
-					<tr>
-						<th>1100-1200</th>
-						<td></td>			<!--Monday-->
-						<td></td>			<!--Tuesday-->
-						<td></td>			<!--Wednesday-->
-						<td></td>			<!--Thursday-->
-						<td></td>			<!--Friday-->
-						<td></td>			<!--Saturday-->
-						<td></td>			<!--Sunday-->
-					</tr>
-
-					<tr>
-						<th>1200-1300</th>
-						<td></td>			<!--Monday-->
-						<td></td>			<!--Tuesday-->
-						<td></td>			<!--Wednesday-->
-						<td></td>			<!--Thursday-->
-						<td></td>			<!--Friday-->
-						<td></td>			<!--Saturday-->
-						<td></td>			<!--Sunday-->
-					</tr>
-
-					<tr>
-						<th>1300-1400</th>
-						<td></td>			<!--Monday-->
-						<td></td>			<!--Tuesday-->
-						<td></td>			<!--Wednesday-->
-						<td></td>			<!--Thursday-->
-						<td></td>			<!--Friday-->
-						<td></td>			<!--Saturday-->
-						<td></td>			<!--Sunday-->
-					</tr>
-
-					<tr>
-						<th>1400-1500</th>
-						<td></td>			<!--Monday-->
-						<td></td>			<!--Tuesday-->
-						<td></td>			<!--Wednesday-->
-						<td></td>			<!--Thursday-->
-						<td></td>			<!--Friday-->
-						<td></td>			<!--Saturday-->
-						<td></td>			<!--Sunday-->
-					</tr>
-
-					<tr>
-						<th>1500-1600</th>
-						<td></td>			<!--Monday-->
-						<td></td>			<!--Tuesday-->
-						<td></td>			<!--Wednesday-->
-						<td></td>			<!--Thursday-->
-						<td></td>			<!--Friday-->
-						<td></td>			<!--Saturday-->
-						<td></td>			<!--Sunday-->
-					</tr>
-
-					<tr>
-						<th>1600-1700</th>
-						<td></td>		<!--Monday-->
-						<td></td>		<!--Tuesday-->
-						<td></td>		<!--Wednesday-->
-						<td></td>		<!--Thursday-->
-						<td></td>		<!--Friday-->
-						<td></td>		<!--Saturday-->
-						<td></td>		<!--Sunday-->
-					</tr>
-
-					<tr>
-						<th>1700-1800</th>
-						<td></td>		<!--Monday-->
-						<td></td>		<!--Tuesday-->
-						<td></td>		<!--Wednesday-->
-						<td></td>		<!--Thursday-->
-						<td></td>		<!--Friday-->
-						<td></td>		<!--Saturday-->
-						<td></td>		<!--Sunday-->
-					</tr>
-
-					<tr>
-						<th>1800-1900</th>
-						<td></td>		<!--Monday-->
-						<td></td>		<!--Tuesday-->
-						<td></td>		<!--Wednesday-->
-						<td></td>		<!--Thursday-->
-						<td></td>		<!--Friday-->
-						<td></td>		<!--Saturday-->
-						<td></td>		<!--Sunday-->
-					</tr>
-
-					<tr>
-						<th>1900-2000</th>
-						<td></td>		<!--Monday-->
-						<td></td>		<!--Tuesday-->
-						<td></td>		<!--Wednesday-->
-						<td></td>		<!--Thursday-->
-						<td></td>		<!--Friday-->
-						<td></td>		<!--Saturday-->
-						<td></td>		<!--Sunday-->
-					</tr>
-
-					<tr>
-						<th>2000-2100</th>
-						<td></td>		<!--Monday-->
-						<td></td>		<!--Tuesday-->
-						<td></td>		<!--Wednesday-->
-						<td></td>		<!--Thursday-->
-						<td></td>		<!--Friday-->
-						<td></td>		<!--Saturday-->
-						<td></td>		<!--Sunday-->
-					</tr>
-				</table>
-	   		</br></br></br>
-	   		</div>
 	  	</div>
 	</div>
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/web-socket-js/1.0.0/web_socket.min.js" integrity="sha512-jtr9/t8rtBf1Sv832XjG1kAtUECQCqFnTAJWccL8CSC82VGzkPPih8rjtOfiiRKgqLXpLA1H/uQ/nq2bkHGWTQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
+	var counter = 0; //counter for additional tables
+
 	function addButtons(){				//add buttons and unique btn ID for each using a for loop instead of copy paste within html
 		var tds = document.getElementsByTagName("td");
 
@@ -565,6 +266,22 @@
 			tds[index].innerHTML = '<div id="c' + index + '">'+data[0]["c"+index.toString()]+'</div>' + tds[index].innerHTML + '<div class="buttonalign";><button id="' + index + '" class="button" onclick="SetCell(this)">+</button></div>';
 		}
 	}
+
+	function AddTable(){		//When Add Table button is clicked, prints a new table
+		counter = counter + 1;	//Add 1 to table counter
+		var cellcounter = counter*84;	//one table = 84 cells. First cell in new table should start at multiples of 84
+		var index = 0;
+
+		newtable = '<div class="item"><h2>Timetable</h2><table><tr> <th>Time</th> <th>Monday</th> <th>Tuesday</th> <th>Wednesday</th> <th>Thursday</th> <th>Friday</th> <th>Saturday</th> <th>Sunday</th> </tr> <tr> <th>0900-1000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1000-1100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1100-1200</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1200-1300</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1300-1400</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1400-1500</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1500-1600</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1600-1700</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1700-1800</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1800-1900</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1900-2000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>2000-2100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> </table> </br></br></br> </div>';
+		
+		tables.insertAdjacentHTML("beforeend", newtable); //print new table
+		
+		var tds = document.getElementsByTagName("td");	//get all td elements
+		for (; cellcounter < (counter+1)*84; cellcounter++) {
+			tds[cellcounter].innerHTML = '<section id="c' + cellcounter + '">' + tds[cellcounter].innerHTML + '<button id="' + cellcounter + '" class="button" onclick="SetCell(this)">+</button></section>';
+		} /*cell and btn id of new table is just a continuation of the previous*/
+	}
+
 
     function SetCell(btn) {				//when button is clicked, a prompt shows asking for a name to add.
         let cellname = "c" + btn.id;
