@@ -33,6 +33,8 @@
 	  		margin-right: auto;
 	  		font-family: "Gill Sans", sans-serif;
 	  		text-align: center;
+	  		text-transform: uppercase;
+	  		font-weight: bold;
 		}
 
 		td, th {
@@ -41,6 +43,8 @@
 			position: relative;
 			text-align: center;
 			width: 12.5%;			/*equal width for all columns*/
+			word-break: break-word; /*wrap words*/
+
 		}
 
 		th {
@@ -55,7 +59,7 @@
 			background-color: transparent;
 			padding: 1px 1px;
 			text-align: center;
-			font-size: 12px;
+			font-size: 8px;
 			margin: 5px 5px;
 			cursor: pointer;
 			float: right;
@@ -89,9 +93,9 @@
 			width: 60px;
 			transition: all 0.5s;	/*0.5s transition to change of bg color during hover; see .chevron:hover*/
 			cursor: pointer;
-			margin: 0px;
+			margin: 10px;
 			border-radius: 10px;
-			/*box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25); /*offset, offset, blur, colour of shadow*/
+			float: right;
 		}
 
 		.chevron span {
@@ -148,7 +152,7 @@
 		.addtable {
 			position: relative;
 			bottom: 0;
-			font-size: 30px;
+			font-size: 35px;
 			background-color: transparent;
 			border: none;
 			color: #354863;
@@ -157,23 +161,48 @@
 			
 		}
 
+		.deltable {
+			font-size: 14px;
+			background-color: transparent;
+			border: none;
+			color: darkred;
+			cursor: pointer;	
+			position: relative;
+			bottom: 0px;		
+		}
+
+		.title {
+			background-color: transparent;
+			width: 16.5%;
+			height: 1%;
+			position: absolute;
+			margin-left: auto;
+	  		margin-right: auto;
+			left: 73.5%;
+			top: 35px;
+			z-index: 2;
+			display: table-row;
+		}
+
 	</style>
 </head>
 
 <body onload="addButtons()">
     <!-- Left and right controls -->
-	<button class="chevron leftbtn" href="#myCarousel" data-slide="prev">
-		<span class="left"> ‹ </span>
-    </button>
-    <button class="chevron rightbtn" href="#myCarousel" data-slide="next">
-    	<span class="right"> › </span>
-    </button>
-	<button class = "addtable" onclick="AddTable()"><i class="bi bi-plus-square-fill"></i></button>	
+	<div class = "title">
+    	<button class="chevron rightbtn" href="#myCarousel" data-slide="next">
+	    	<span class="right"> › </span>
+	    </button>
+    	<button class="chevron leftbtn" href="#myCarousel" data-slide="prev">
+    		<span class="left"> ‹ </span>
+	    </button>	
+	    <button class = "addtable" onclick="AddTable()"><i class="bi bi-plus-square-fill"></i></button>
+    </div>
 	<!--start of carousel-->
-	<div id="myCarousel" class="carousel slide" data-interval="false">
+	<div id="myCarousel" class="carousel slide" style="top: 27px;" data-interval="false">
 	    <div id = "tables" class="carousel-inner">
 	      	<div class="item active">
-		      	<h2 id = "heading">This Week</h2>
+		      	<h2> Time Table </h2>
 				<table>
 					<tr>
 						<th>Time</th>
@@ -320,8 +349,7 @@
 				</table>
 	      	</br></br></br>
 	      	</div>
-
-	  	</div>
+	  	</div>    
 	</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -337,7 +365,7 @@
 
 		for ( var index = 0; index < tds.length; index++) {
 
-			tds[index].innerHTML = '<div id="t ' + counter + ' c ' + index + '">'+data[0]["c"+index.toString()]+'</div>' + tds[index].innerHTML + '<button id="' + counter + ' c ' + index + '" class="button" onclick="SetCell(this)"><i class="bi bi-plus-square"></i></button></section>';
+			tds[index].innerHTML = '<div id="t ' + counter + ' c ' + index + '">'+data[0]["c"+index.toString()]+'</div>' + tds[index].innerHTML + '<button id="' + counter + ' c ' + index + '" class="button" onclick="SetCell(this)"><i class="bi bi-pencil"></i></button></section>';
 		}
 	}
 
@@ -346,15 +374,22 @@
 		var cellcounter = (counter-1)*84;	//one table = 84 cells. First cell in new table should start at multiples of 84
 		var index = 0;
 
-		newtable = '<div class="item"><h2>Timetable</h2><table><tr> <th>Time</th> <th>Monday</th> <th>Tuesday</th> <th>Wednesday</th> <th>Thursday</th> <th>Friday</th> <th>Saturday</th> <th>Sunday</th> </tr> <tr> <th>0900-1000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1000-1100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1100-1200</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1200-1300</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1300-1400</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1400-1500</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1500-1600</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1600-1700</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1700-1800</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1800-1900</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1900-2000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>2000-2100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> </table> </br></br></br> </div>';
-		
-		tables.insertAdjacentHTML("beforeend", newtable); //print new table
-		
-		var tds = document.getElementsByTagName("td");	//get all td elements
-		for (; cellcounter < (counter)*84; cellcounter++) {
-			tds[cellcounter].innerHTML = '<section id="t ' + counter + ' c'  + index + '">' + tds[cellcounter].innerHTML + '<button id="' + counter + ' c ' + index + '" class="button" onclick="SetCell(this)"><i class="bi bi-plus-square"></i></button></section>';
-			index = index + 1;
-		} /*cell and btn id = table# + cell# */
+		let weekdate = prompt("Please enter date:");	/*adds date of Monday to table title*/
+
+		if (weekdate == null || weekdate == "") {
+	  	} 
+
+	  	else {
+	    	newtable = '<div class="item"><h2>Week of ' + weekdate + '<button class = "deltable" onclick="DeleteTable()"><i class="bi bi-trash"></i></button></h2><table><tr> <th>Time</th> <th>Monday</th> <th>Tuesday</th> <th>Wednesday</th> <th>Thursday</th> <th>Friday</th> <th>Saturday</th> <th>Sunday</th> </tr> <tr> <th>0900-1000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1000-1100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1100-1200</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1200-1300</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1300-1400</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1400-1500</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1500-1600</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1600-1700</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1700-1800</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1800-1900</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1900-2000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>2000-2100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> </table> </br></br></br> </div>';
+	    
+			tables.insertAdjacentHTML("beforeend", newtable); //print new table
+			
+			var tds = document.getElementsByTagName("td");	//get all td elements
+			for (; cellcounter < (counter)*84; cellcounter++) {
+				tds[cellcounter].innerHTML = '<section id="t ' + counter + ' c'  + index + '">' + tds[cellcounter].innerHTML + '<button id="' + counter + ' c ' + index + '" class="button" onclick="SetCell(this)"><i class="bi bi-pencil"></i></button></section>';
+				index = index + 1;
+			} /*cell and btn id = table# + cell# */
+		}
 	}
 
 
@@ -362,24 +397,25 @@
         let cell = "t " + btn.id;
         let text;
         let person = prompt("Please enter name:");
+
         if (person == null || person == "") {
-            text = '';
         }
+        
         else {
             text = person ;
+            document.getElementById(cell).innerHTML = text;		//Saves it to the cell# that triggered the function.
+
+	        const cellnumber = cell.split(" ");		//splits it at the spaces
+	        let cellname = "c" + cellnumber[3];		//gets the cell number; cellnumber[1] is the table#
+
+
+	        $.ajax({
+	            type: 'POST',
+	            url: 'http://localhost:3000/updateTimetableTable',
+	            data: { 'student': text, 'cell': cellname },
+	            success: sendRefreshMessageToServer()
+	        });
         }
-        document.getElementById(cell).innerHTML = text;		//Saves it to the cell# that triggered the function.
-
-        const cellnumber = cell.split(" ");		//splits it at the spaces
-        let cellname = "c" + cellnumber[3];		//gets the cell number; cellnumber[1] is the table#
-
-        $.ajax({
-            type: 'POST',
-            url: 'http://localhost:3000/updateTimetableTable',
-            data: { 'student': text, 'cell': cellname },
-            success: sendRefreshMessageToServer()
-        });
-
     }
 
 
