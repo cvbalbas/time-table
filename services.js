@@ -10,8 +10,8 @@ function getDataFromTimetableTable(callback){
     })
 }
 
-function updateTimetableTable(cell, student){
-    var sql = "UPDATE timetable SET `" + cell + "` = '" + student +"' WHERE `timetable`.`id` = 0";
+function updateTimetableTable(cell, student, table){
+    var sql = "UPDATE timetable SET `" + cell + "` = '" + student +"' WHERE `timetable`.`id` = " + table;
     con.query(sql, function (err, result) {
         if (err) throw err;
         console.log(result.affectedRows + " record(s) updated");

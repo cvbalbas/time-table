@@ -10,6 +10,7 @@ function router(app){
     app.post("/updateTimetableTable", function (request, response){
         var student = request.body.student
         var cell = request.body.cell
-        updateTimetableTable(cell, student)
+        var table = request.body.table
+        updateTimetableTable(cell, student, table)
     })
 }
