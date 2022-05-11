@@ -357,16 +357,33 @@
 
 <script>
 	var counter = 1; //counter for additional tables
+	
+	var data = <%- JSON.stringify(data) %>;
+	let tablecount = Object.keys(data).length;
+	console.log(data)
+	console.log(tablecount)
 
-	function addButtons(){				//add buttons and unique btn ID for each using a for loop instead of copy paste within html
-		var tds = document.getElementsByTagName("td");
-        var data = <%- JSON.stringify(data) %>;
-        console.log(data)
+	function addButtons(){	//add buttons and unique btn ID for each using a for loop instead of copy paste within html
+		for ( var tblinc = 1; tblinc < tablecount; tblinc++ ) {
 
-		for ( var index = 0; index < tds.length; index++) {
-
-			tds[index].innerHTML = '<div id="t ' + counter + ' c ' + index + '">'+data[0]["c"+index.toString()]+'</div>' + tds[index].innerHTML + '<button id="' + counter + ' c ' + index + '" class="button" onclick="SetCell(this)"><i class="bi bi-pencil"></i></button></section>';
+			console.log(data[tblinc.toString()]["id"]);
+			let newtable = '<div class="item"><h2>Week of ' + data[tblinc.toString()]["id"] + '<button class = "deltable" onclick="DeleteTable()"><i class="bi bi-trash"></i></button></h2><table><tr> <th>Time</th> <th>Monday</th> <th>Tuesday</th> <th>Wednesday</th> <th>Thursday</th> <th>Friday</th> <th>Saturday</th> <th>Sunday</th> </tr> <tr> <th>0900-1000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1000-1100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1100-1200</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1200-1300</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1300-1400</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1400-1500</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1500-1600</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1600-1700</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1700-1800</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1800-1900</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1900-2000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>2000-2100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> </table> </br></br></br> </div>';
+	    
+			tables.insertAdjacentHTML("beforeend", newtable); //print existing table
 		}
+
+		var tds = document.getElementsByTagName("td");
+
+		let index = 0;
+        
+        for ( tblinc = 0; tblinc < tablecount; tblinc++) {
+        	console.log("ye");
+        	for (let cellinc = 0; cellinc < 84; cellinc++) {
+	        	console.log("yo");
+				tds[index].innerHTML = '<div id="t ' + tblinc + ' c ' + cellinc + '">' + data[tblinc.toString()]["c"+cellinc.toString()] + '</div>' + tds[index].innerHTML + '<button id="' + tblinc + ' c ' + cellinc + '" class="button" onclick="SetCell(this)"><i class="bi bi-pencil"></i></button></section>';
+				index = index + 1;
+			}
+        }
 	}
 
 	function AddTable(){		//When Add Table button is clicked, prints a new table
@@ -380,7 +397,7 @@
 	  	} 
 
 	  	else {
-	    	newtable = '<div class="item"><h2>Week of ' + weekdate + '<button class = "deltable" onclick="DeleteTable()"><i class="bi bi-trash"></i></button></h2><table><tr> <th>Time</th> <th>Monday</th> <th>Tuesday</th> <th>Wednesday</th> <th>Thursday</th> <th>Friday</th> <th>Saturday</th> <th>Sunday</th> </tr> <tr> <th>0900-1000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1000-1100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1100-1200</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1200-1300</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1300-1400</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1400-1500</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1500-1600</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1600-1700</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1700-1800</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1800-1900</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1900-2000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>2000-2100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> </table> </br></br></br> </div>';
+	    	let newtable = '<div class="item"><h2>Week of ' + weekdate + '<button class = "deltable" onclick="DeleteTable()"><i class="bi bi-trash"></i></button></h2><table><tr> <th>Time</th> <th>Monday</th> <th>Tuesday</th> <th>Wednesday</th> <th>Thursday</th> <th>Friday</th> <th>Saturday</th> <th>Sunday</th> </tr> <tr> <th>0900-1000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1000-1100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1100-1200</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1200-1300</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1300-1400</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1400-1500</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1500-1600</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1600-1700</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1700-1800</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1800-1900</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1900-2000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>2000-2100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> </table> </br></br></br> </div>';
 	    
 			tables.insertAdjacentHTML("beforeend", newtable); //print new table
 			
@@ -396,11 +413,11 @@
     function SetCell(btn) {				//when button is clicked, a prompt shows asking for a name to add.
         let cell = "t " + btn.id;
         let text;
-        let person = prompt("Please enter name:");
+        let person = prompt("Please enter name:" + btn.id);
 
         if (person == null || person == "") {
         }
-        
+
         else {
             text = person ;
             document.getElementById(cell).innerHTML = text;		//Saves it to the cell# that triggered the function.
