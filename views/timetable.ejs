@@ -356,8 +356,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/web-socket-js/1.0.0/web_socket.min.js" integrity="sha512-jtr9/t8rtBf1Sv832XjG1kAtUECQCqFnTAJWccL8CSC82VGzkPPih8rjtOfiiRKgqLXpLA1H/uQ/nq2bkHGWTQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
-	var counter = 1; //counter for additional tables
-	
 	var data = <%- JSON.stringify(data) %>;
 	let tablecount = Object.keys(data).length;
 	console.log(data)
@@ -385,25 +383,39 @@
 	}
 
 	function AddTable(){		//When Add Table button is clicked, prints a new table
-		counter = counter + 1;	//Add 1 to table counter
-		var cellcounter = (counter-1)*84;	//one table = 84 cells. First cell in new table should start at multiples of 84
-		var index = 0;
-
+		
 		let weekdate = prompt("Please enter date:");	/*adds date of Monday to table title*/
 
 		if (weekdate == null || weekdate == "") {
 	  	} 
 
-	  	else {
+	  	else {			//if there's an inputted value in prompt, add table
+	  		$.ajax({
+	            type: 'POST',			//copy values of primary row to new row, with new id = weekdate
+	            url: 'http://localhost:3000/addTimetableTable',
+	            data: { 'id': weekdate },
+	            success: sendRefreshMessageToServer()
+		    });
+
+		  	data = <%- JSON.stringify(data) %>;
+		  	//console.log(data[0]);
+			let tablecount = Object.keys(data).length;
+			data[tablecount] = data [0];				//copy values of primary row to new row
+			data[tablecount.toString()]['id'] = weekdate;	//change id of new row to weekdate
+			//console.log(data);
+
 	    	let newtable = '<div class="item"><h2>Week of ' + weekdate + '<button class = "deltable" onclick="DeleteTable()"><i class="bi bi-trash"></i></button></h2><table><tr> <th>Time</th> <th>Monday</th> <th>Tuesday</th> <th>Wednesday</th> <th>Thursday</th> <th>Friday</th> <th>Saturday</th> <th>Sunday</th> </tr> <tr> <th>0900-1000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1000-1100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1100-1200</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1200-1300</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1300-1400</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1400-1500</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1500-1600</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1600-1700</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1700-1800</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1800-1900</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1900-2000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>2000-2100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> </table> </br></br></br> </div>';
 	    
 			tables.insertAdjacentHTML("beforeend", newtable); //print new table
 			
+			//console.log(tablecount);
+			var index = tablecount*84;	//one table = 84 cells. First cell in new table should start at multiples of 84
 			var tds = document.getElementsByTagName("td");	//get all td elements
-			for (; cellcounter < (counter)*84; cellcounter++) {
-				tds[cellcounter].innerHTML = '<section id="t ' + counter + ' c'  + index + '">' + tds[cellcounter].innerHTML + '<button id="' + counter + ' c ' + index + '" class="button" onclick="SetCell(this)"><i class="bi bi-pencil"></i></button></section>';
+
+        	for (let cellinc = 0; cellinc < 84; cellinc++) {
+				tds[index].innerHTML = '<div id="t ' + tablecount + ' c ' + cellinc + '">' + data[tablecount]["c"+cellinc.toString()] + '</div>' + tds[index].innerHTML + '<button id="' + tablecount + ' c ' + cellinc + '" class="button" onclick="SetCell(this)"><i class="bi bi-pencil"></i></button></section>';
 				index = index + 1;
-			} /*cell and btn id = table# + cell# */
+			}
 		}
 	}
 
