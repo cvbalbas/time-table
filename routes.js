@@ -14,7 +14,7 @@ function router(app){
         updateTimetableTable(cell, student, table)
     })
     app.post("/addTimetableTable", function (request, response) {
-        var id = request.body.id
-        addTimetableTable(id)
+        var weekdate = request.body.weekdate
+        addTimetableTable(weekdate)
     })
 }
