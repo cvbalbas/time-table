@@ -365,9 +365,7 @@
 		for ( var tblinc = 1; tblinc < tablecount; tblinc++ ) {
 
 			let weekdate = new Date(data[tblinc.toString()]["weekdate"]);
-			//console.log(weekdate);
 			let ukDate = weekdate.toLocaleString('en-GB', { timeZone: 'Europe/London' }).substr(0,10);
-			//console.log(ukDate);
 
 			let newtable = '<div class="item"><h2>Week of ' + ukDate + '<button class = "deltable" onclick="DeleteTable()"><i class="bi bi-trash"></i></button></h2><table><tr> <th>Time</th> <th>Monday</th> <th>Tuesday</th> <th>Wednesday</th> <th>Thursday</th> <th>Friday</th> <th>Saturday</th> <th>Sunday</th> </tr> <tr> <th>0900-1000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1000-1100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1100-1200</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1200-1300</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1300-1400</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1400-1500</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1500-1600</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1600-1700</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1700-1800</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1800-1900</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1900-2000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>2000-2100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> </table> </br></br></br> </div>';
 	    
@@ -394,19 +392,19 @@
 	  	} 
 
 	  	else {			//if there's an inputted value in prompt, add table
+	  		weekdatesql = weekdate.split("/");		//splits it at the /
+	  		weekdatesql = weekdatesql[2] + '-' + weekdatesql[1] + '-' + weekdatesql[0];
 	  		$.ajax({
 	            type: 'POST',			//copy values of primary row to new row, with new id = weekdate
 	            url: 'http://localhost:3000/addTimetableTable',
-	            data: { 'weekdate': weekdate },
+	            data: { 'weekdate': weekdatesql },
 	            success: sendRefreshMessageToServer()
 		    });
 
 		  	data = <%- JSON.stringify(data) %>;
-		  	console.log(data[0]);
 			let tablecount = Object.keys(data).length;
 			data[tablecount] = data [0];				//copy values of primary row to new row
-			data[tablecount.toString()]['weekdate'] = weekdate;	//change id of new row to weekdate
-			//console.log('CHECK' + weekdate);
+			data[tablecount.toString()]['weekdate'] = weekdatesql;	//change id of new row to weekdate
 
 	    	let newtable = '<div class="item"><h2>Week of ' + weekdate + '<button class = "deltable" onclick="DeleteTable()"><i class="bi bi-trash"></i></button></h2><table><tr> <th>Time</th> <th>Monday</th> <th>Tuesday</th> <th>Wednesday</th> <th>Thursday</th> <th>Friday</th> <th>Saturday</th> <th>Sunday</th> </tr> <tr> <th>0900-1000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1000-1100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1100-1200</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1200-1300</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1300-1400</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1400-1500</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1500-1600</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1600-1700</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1700-1800</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1800-1900</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1900-2000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>2000-2100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> </table> </br></br></br> </div>';
 	    
