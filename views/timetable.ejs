@@ -190,13 +190,12 @@
 <body onload="addButtons()">
     <!-- Left and right controls -->
 	<div class = "title">
-    	<button class="chevron rightbtn" href="#myCarousel" data-slide="next">
+    	<button class="chevron rightbtn" href="#myCarousel" data-slide="next" onclick="AddTable()">
 	    	<span class="right"> › </span>
 	    </button>
     	<button class="chevron leftbtn" href="#myCarousel" data-slide="prev">
     		<span class="left"> ‹ </span>
 	    </button>	
-	    <button class = "addtable" onclick="AddTable()"><i class="bi bi-plus-square-fill"></i></button>
     </div>
 	<!--start of carousel-->
 	<div id="myCarousel" class="carousel slide" style="top: 27px;" data-interval="false">
@@ -358,14 +357,14 @@
 <script>
 	var data = <%- JSON.stringify(data) %>;
 	let tablecount = Object.keys(data).length;
-	console.log(data)
-	console.log(tablecount)
 
 	function addButtons(){	//add buttons and unique btn ID for each using a for loop instead of copy paste within html
 		for ( var tblinc = 1; tblinc < tablecount; tblinc++ ) {
 
-			console.log(data[tblinc.toString()]["id"]);
-			let newtable = '<div class="item"><h2>Week of ' + data[tblinc.toString()]["id"] + '<button class = "deltable" onclick="DeleteTable()"><i class="bi bi-trash"></i></button></h2><table><tr> <th>Time</th> <th>Monday</th> <th>Tuesday</th> <th>Wednesday</th> <th>Thursday</th> <th>Friday</th> <th>Saturday</th> <th>Sunday</th> </tr> <tr> <th>0900-1000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1000-1100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1100-1200</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1200-1300</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1300-1400</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1400-1500</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1500-1600</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1600-1700</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1700-1800</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1800-1900</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1900-2000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>2000-2100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> </table> </br></br></br> </div>';
+			var date = new Date(data[tblinc.toString()]["weekdate"])
+			date = date.toLocaleDateString("en-GB", {timeZone: "Europe/London"})
+	
+			let newtable = '<div class="item"><h2>Week of ' + date + '</h2><table><tr> <th>Time</th> <th>Monday</th> <th>Tuesday</th> <th>Wednesday</th> <th>Thursday</th> <th>Friday</th> <th>Saturday</th> <th>Sunday</th> </tr> <tr> <th>0900-1000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1000-1100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1100-1200</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1200-1300</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1300-1400</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1400-1500</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1500-1600</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1600-1700</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1700-1800</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1800-1900</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1900-2000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>2000-2100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> </table> </br></br></br> </div>';
 	    
 			tables.insertAdjacentHTML("beforeend", newtable); //print existing table
 		}
@@ -383,40 +382,46 @@
 	}
 
 	function AddTable(){		//When Add Table button is clicked, prints a new table
-		
-		let weekdate = prompt("Please enter date:");	/*adds date of Monday to table title*/
+		if (document.getElementsByClassName("active")[0].innerHTML.includes("t "+(data.length-1).toString())){
+						
+			let date = new Date(getActiveTableDate())
+			date.setDate(date.getDate() + 7);
+			date = date.toLocaleDateString("en-GB", {timeZone: "Europe/London"})
 
-		if (weekdate == null || weekdate == "") {
-	  	} 
+			let weekdate =  date	/*adds date of Monday to table title*/
 
-	  	else {			//if there's an inputted value in prompt, add table
-	  		$.ajax({
-	            type: 'POST',			//copy values of primary row to new row, with new id = weekdate
-	            url: 'http://localhost:3000/addTimetableTable',
-	            data: { 'id': weekdate },
-	            success: sendRefreshMessageToServer()
-		    });
+			if (weekdate == null || weekdate == "") {
+			} 
 
-		  	data = <%- JSON.stringify(data) %>;
-		  	//console.log(data[0]);
-			let tablecount = Object.keys(data).length;
-			data[tablecount] = data [0];				//copy values of primary row to new row
-			data[tablecount.toString()]['id'] = weekdate;	//change id of new row to weekdate
-			//console.log(data);
+			else {			//if there's an inputted value in prompt, add table
+				$.ajax({
+					type: 'POST',			//copy values of primary row to new row, with new id = weekdate
+					url: 'http://localhost:3000/addTimetableTable',
+					data: {'weekdate': weekdate.toString().split("/").reverse().join("-")},
+					success: sendRefreshMessageToServer()
+				});
 
-	    	let newtable = '<div class="item"><h2>Week of ' + weekdate + '<button class = "deltable" onclick="DeleteTable()"><i class="bi bi-trash"></i></button></h2><table><tr> <th>Time</th> <th>Monday</th> <th>Tuesday</th> <th>Wednesday</th> <th>Thursday</th> <th>Friday</th> <th>Saturday</th> <th>Sunday</th> </tr> <tr> <th>0900-1000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1000-1100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1100-1200</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1200-1300</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1300-1400</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1400-1500</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1500-1600</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1600-1700</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1700-1800</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1800-1900</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1900-2000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>2000-2100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> </table> </br></br></br> </div>';
-	    
-			tables.insertAdjacentHTML("beforeend", newtable); //print new table
+				data[tablecount] = data [0];				//copy values of primary row to new row
+				data[tablecount.toString()]['weekdate'] = weekdate;	//change id of new row to weekdate
+				//console.log(data);
+
+				let newtable = '<div class="item"><h2>Week of ' + weekdate + '</h2><table><tr> <th>Time</th> <th>Monday</th> <th>Tuesday</th> <th>Wednesday</th> <th>Thursday</th> <th>Friday</th> <th>Saturday</th> <th>Sunday</th> </tr> <tr> <th>0900-1000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1000-1100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1100-1200</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1200-1300</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1300-1400</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1400-1500</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1500-1600</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1600-1700</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1700-1800</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1800-1900</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1900-2000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>2000-2100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> </table> </br></br></br> </div>';
 			
-			//console.log(tablecount);
-			var index = tablecount*84;	//one table = 84 cells. First cell in new table should start at multiples of 84
-			var tds = document.getElementsByTagName("td");	//get all td elements
+				tables.insertAdjacentHTML("beforeend", newtable); //print new table
+				
+				//console.log(tablecount);
+				var index = tablecount*84;	//one table = 84 cells. First cell in new table should start at multiples of 84
+				var tds = document.getElementsByTagName("td");	//get all td elements
 
-        	for (let cellinc = 0; cellinc < 84; cellinc++) {
-				tds[index].innerHTML = '<div id="t ' + tablecount + ' c ' + cellinc + '">' + data[tablecount]["c"+cellinc.toString()] + '</div>' + tds[index].innerHTML + '<button id="' + tablecount + ' c ' + cellinc + '" class="button" onclick="SetCell(this)"><i class="bi bi-pencil"></i></button></section>';
-				index = index + 1;
+				for (let cellinc = 0; cellinc < 84; cellinc++) {
+					tds[index].innerHTML = '<div id="t ' + tablecount + ' c ' + cellinc + '">' + data[tablecount]["c"+cellinc.toString()] + '</div>' + tds[index].innerHTML + '<button id="' + tablecount + ' c ' + cellinc + '" class="button" onclick="SetCell(this)"><i class="bi bi-pencil"></i></button></section>';
+					index = index + 1;
+				}
 			}
+			
 		}
+
+		tablecount++
 	}
 
 
@@ -502,6 +507,16 @@
     function sendRefreshMessageToServer() {
         connection.send(clientId)
     }
+
+	function getActiveTableDate(){
+		html =document.getElementsByClassName("active")[0].innerHTML
+		heading = /<h2>(.*?)<\/h2>/g.exec(html)
+		heading = heading[1].replace("Week of", "")
+		heading = heading.substring(1)
+		heading = heading.split("/").reverse().join("-");
+		return heading
+	}
+
 
 </script> 
 
