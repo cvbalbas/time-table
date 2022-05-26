@@ -173,15 +173,34 @@
 
 		.title {
 			background-color: transparent;
-			width: 16.5%;
+			width: 25%;
 			height: 1%;
 			position: absolute;
 			margin-left: auto;
 	  		margin-right: auto;
-			left: 73.5%;
+			left: 65%;
 			top: 35px;
 			z-index: 2;
 			display: table-row;
+		}
+
+		.loader {
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: 18%;
+		position: relative;
+		border: 16px solid #f3f3f3; /* Light grey */
+		border-top: 16px solid #354863; /* Blue */
+		border-radius: 50%;
+		width: 120px;
+		height: 120px;
+		animation: spin 2s linear infinite;
+		}
+		
+
+		@keyframes spin {
+		0% { transform: rotate(0deg); }
+		100% { transform: rotate(360deg); }
 		}
 
 	</style>
@@ -196,12 +215,14 @@
     	<button class="chevron leftbtn" href="#myCarousel" data-slide="prev">
     		<span class="left"> ‹ </span>
 	    </button>	
+		<button class ="chevron defaultbtn" onclick="displayDefault()"><i class="bi bi-pen"></i></button>
     </div>
 	<!--start of carousel-->
 	<div id="myCarousel" class="carousel slide" style="top: 27px;" data-interval="false">
 	    <div id = "tables" class="carousel-inner">
-	      	<div class="item active">
-		      	<h2> Time Table </h2>
+			<div class="loader"></div>
+	      	<div class="item default">
+		      	<h2> Default Schedule </h2>
 				<table>
 					<tr>
 						<th>Time</th>
@@ -357,16 +378,30 @@
 <script>
 	var data = <%- JSON.stringify(data) %>;
 	let tablecount = Object.keys(data).length;
+	let todayDate = new Date();					//gets current day
+	let dayofweeknumber = todayDate.getDay();
+	let nameOfDay;
+	let weekOfDate = new Date()
+	weekOfDate.setDate(weekOfDate.getDate() - dayofweeknumber + 1)
+	weekOfDate  = weekOfDate.toLocaleDateString("en-GB", {timeZone: "Europe/London"})
 
 	function addButtons(){	//add buttons and unique btn ID for each using a for loop instead of copy paste within html
 		for ( var tblinc = 1; tblinc < tablecount; tblinc++ ) {
 
+			console.log(data[tblinc.toString()]["id"]);
+			
 			var date = new Date(data[tblinc.toString()]["weekdate"])
 			date = date.toLocaleDateString("en-GB", {timeZone: "Europe/London"})
-	
+
 			let newtable = '<div class="item"><h2>Week of ' + date + '</h2><table><tr> <th>Time</th> <th>Monday</th> <th>Tuesday</th> <th>Wednesday</th> <th>Thursday</th> <th>Friday</th> <th>Saturday</th> <th>Sunday</th> </tr> <tr> <th>0900-1000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1000-1100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1100-1200</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1200-1300</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1300-1400</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1400-1500</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1500-1600</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1600-1700</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1700-1800</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1800-1900</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1900-2000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>2000-2100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> </table> </br></br></br> </div>';
 	    
+			if (date == weekOfDate){
+				document.getElementsByClassName("loader")[0].style.display = "none"
+				newtable = '<div class="item active"><h2>Week of ' + date + '</h2><table><tr> <th>Time</th> <th>Monday</th> <th>Tuesday</th> <th>Wednesday</th> <th>Thursday</th> <th>Friday</th> <th>Saturday</th> <th>Sunday</th> </tr> <tr> <th>0900-1000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1000-1100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1100-1200</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1200-1300</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1300-1400</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1400-1500</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1500-1600</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1600-1700</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1700-1800</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1800-1900</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1900-2000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>2000-2100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> </table> </br></br></br> </div>';  
+			}
+
 			tables.insertAdjacentHTML("beforeend", newtable); //print existing table
+			
 		}
 
 		var tds = document.getElementsByTagName("td");
@@ -379,12 +414,15 @@
 				index = index + 1;
 			}
         }
+
+
 	}
 
 	function AddTable(){		//When Add Table button is clicked, prints a new table
 		if (document.getElementsByClassName("active")[0].innerHTML.includes("t "+(data.length-1).toString())){
 						
 			let date = new Date(getActiveTableDate())
+			console.log(getActiveTableDate())
 			date.setDate(date.getDate() + 7);
 			date = date.toLocaleDateString("en-GB", {timeZone: "Europe/London"})
 
@@ -401,6 +439,7 @@
 					success: sendRefreshMessageToServer()
 				});
 
+				console.log(tablecount)
 				data[tablecount] = data [0];				//copy values of primary row to new row
 				data[tablecount.toString()]['weekdate'] = weekdate;	//change id of new row to weekdate
 				//console.log(data);
@@ -452,10 +491,6 @@
     }
 
 
-	let date = new Date();					//gets current day
-	let dayofweeknumber = date.getDay();
-	let nameOfDay;
-
 	switch(dayofweeknumber) {
 		case 0: 
         	nameOfDay = 'sunday';
@@ -490,6 +525,7 @@
 		document.getElementsByClassName(nameOfDay)[i].style.backgroundColor = "rgba(195, 164, 255, 0.5)";
 	}
 
+
     const url = 'ws://localhost:8080'
     const connection = new WebSocket(url)
 
@@ -516,6 +552,12 @@
 		heading = heading.split("/").reverse().join("-");
 		return heading
 	}
+
+	function displayDefault(){
+		document.getElementsByClassName("active")[0].classList.remove("active")
+		document.getElementsByClassName("default")[0].classList.add("active")
+	}
+
 
 
 </script> 
