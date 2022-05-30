@@ -93,7 +93,7 @@
 			width: 60px;
 			transition: all 0.5s;	/*0.5s transition to change of bg color during hover; see .chevron:hover*/
 			cursor: pointer;
-			margin: 10px;
+			margin: 5px;
 			border-radius: 10px;
 			float: right;
 		}
@@ -107,6 +107,10 @@
 
 		.chevron:hover {
 			background-color: #1B2533; 
+		}
+
+		.leftbtn{
+			margin-left: 20px !important;
 		}
 
 		.leftbtn .left:before {			/*uses :before for animation to happen when you hover to the button instead of out of the button*/
@@ -203,6 +207,15 @@
 		100% { transform: rotate(360deg); }
 		}
 
+		.defaultbtn{
+			width: 50px;
+		}
+
+		.thisWeekbtn{
+			width: 50px;
+		}
+
+
 	</style>
 </head>
 
@@ -216,6 +229,7 @@
     		<span class="left"> ‹ </span>
 	    </button>	
 		<button class ="chevron defaultbtn" onclick="displayDefault()"><i class="bi bi-pen"></i></button>
+		<button class ="chevron thisWeekbtn" onclick="displayThisWeek()"><i class="bi bi-calendar-event"></i></button>
     </div>
 	<!--start of carousel-->
 	<div id="myCarousel" class="carousel slide" style="top: 27px;" data-interval="false">
@@ -397,7 +411,7 @@
 	    
 			if (date == weekOfDate){
 				document.getElementsByClassName("loader")[0].style.display = "none"
-				newtable = '<div class="item active"><h2>Week of ' + date + '</h2><table><tr> <th>Time</th> <th>Monday</th> <th>Tuesday</th> <th>Wednesday</th> <th>Thursday</th> <th>Friday</th> <th>Saturday</th> <th>Sunday</th> </tr> <tr> <th>0900-1000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1000-1100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1100-1200</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1200-1300</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1300-1400</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1400-1500</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1500-1600</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1600-1700</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1700-1800</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1800-1900</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1900-2000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>2000-2100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> </table> </br></br></br> </div>';  
+				newtable = '<div class="item thisWeek active"><h2>Week of ' + date + '</h2><table><tr> <th>Time</th> <th>Monday</th> <th>Tuesday</th> <th>Wednesday</th> <th>Thursday</th> <th>Friday</th> <th>Saturday</th> <th>Sunday</th> </tr> <tr> <th>0900-1000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1000-1100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1100-1200</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1200-1300</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1300-1400</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1400-1500</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1500-1600</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1600-1700</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1700-1800</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1800-1900</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1900-2000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>2000-2100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> </table> </br></br></br> </div>';  
 			}
 
 			tables.insertAdjacentHTML("beforeend", newtable); //print existing table
@@ -537,7 +551,6 @@
         }
     }
 
-
     var clientId = Math.random(1)
 
     function sendRefreshMessageToServer() {
@@ -556,6 +569,18 @@
 	function displayDefault(){
 		document.getElementsByClassName("active")[0].classList.remove("active")
 		document.getElementsByClassName("default")[0].classList.add("active")
+	}
+
+	function displayThisWeek(){
+		for ( var tblinc = 1; tblinc < tablecount; tblinc++ ) {
+			var date = new Date(data[tblinc.toString()]["weekdate"])
+			date = date.toLocaleDateString("en-GB", {timeZone: "Europe/London"})
+
+			if (date == weekOfDate){
+				document.getElementsByClassName("active")[0].classList.remove("active")
+				document.getElementsByClassName("thisWeek")[0].classList.add("active")
+			}
+		}
 	}
 
 
