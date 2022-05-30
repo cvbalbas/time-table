@@ -232,7 +232,7 @@
 		<button class ="chevron thisWeekbtn" onclick="displayThisWeek()"><i class="bi bi-calendar-event"></i></button>
     </div>
 	<!--start of carousel-->
-	<div id="myCarousel" class="carousel slide" style="top: 27px;" data-interval="false">
+	<div id="myCarousel" class="carousel slide" style="top: 27px;" data-interval="false" data-wrap="false">
 	    <div id = "tables" class="carousel-inner">
 			<div class="loader"></div>
 	      	<div class="item default">
@@ -472,9 +472,9 @@
 				}
 			}
 			
+		tablecount++
 		}
 
-		tablecount++
 	}
 
 
@@ -573,6 +573,8 @@
 
 	function displayThisWeek(){
 		for ( var tblinc = 1; tblinc < tablecount; tblinc++ ) {
+			console.log(tblinc)
+			console.log(data[tblinc.toString()]["weekdate"])
 			var date = new Date(data[tblinc.toString()]["weekdate"])
 			date = date.toLocaleDateString("en-GB", {timeZone: "Europe/London"})
 
