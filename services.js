@@ -1,4 +1,4 @@
-module.exports = {getDataFromTimetableTable, updateTimetableTable, addTimetableTable}
+module.exports = { getDataFromTimetableTable, updateTimetableTable, addTimetableTable, delTimetableTable}
 const con = require("./connect")
 
 function getDataFromTimetableTable(callback){
@@ -11,7 +11,7 @@ function getDataFromTimetableTable(callback){
 }
 
 function updateTimetableTable(cell, student, table){
-    var sql = "UPDATE timetable SET `" + cell + "` = '" + student +"' WHERE `timetable`.`weekdate` = " + table;
+    var sql = "UPDATE timetable SET `" + cell + "` = '" + student + "' WHERE `timetable`.`weekdate` = '" + table + "'";
     con.query(sql, function (err, result) {
         if (err) throw err;
         console.log(result.affectedRows + " record(s) updated");
@@ -29,6 +29,14 @@ function addTimetableTable(weekdate) {
 
     con.query(sql2, function (err, result) {
         if (err) throw err;
-        console.log(result.affectedRows + " record(s) updated");
+        console.log(result.affectedRows + " table added");
+    });
+}
+
+function delTimetableTable(id) {
+    var sql = "DELETE FROM timetable WHERE `timetable`.`id` =" + id;
+    con.query(sql, function (err, result) {
+        if (err) throw err;
+        console.log(result.affectedRows + " deleted table");
     });
 }

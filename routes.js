@@ -1,5 +1,5 @@
 module.exports = router
-const {updateTimetableTable, getDataFromTimetableTable, addTimetableTable} = require("./services")
+const { updateTimetableTable, getDataFromTimetableTable, addTimetableTable, delTimetableTable} = require("./services")
 
 function router(app){
     app.get('/', function(request, response){
@@ -16,5 +16,9 @@ function router(app){
     app.post("/addTimetableTable", function (request, response) {
         var weekdate = request.body.weekdate
         addTimetableTable(weekdate)
+    })
+    app.post("/delTimetableTable", function (request, response) {
+        var id = request.body.id
+        delTimetableTable(id)
     })
 }

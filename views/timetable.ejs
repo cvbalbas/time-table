@@ -367,7 +367,7 @@
 			let weekdate = new Date(data[tblinc.toString()]["weekdate"]);
 			let ukDate = weekdate.toLocaleString('en-GB', { timeZone: 'Europe/London' }).substr(0,10);
 
-			let newtable = '<div class="item"><h2>Week of ' + ukDate + '<button class = "deltable" onclick="DeleteTable()"><i class="bi bi-trash"></i></button></h2><table><tr> <th>Time</th> <th>Monday</th> <th>Tuesday</th> <th>Wednesday</th> <th>Thursday</th> <th>Friday</th> <th>Saturday</th> <th>Sunday</th> </tr> <tr> <th>0900-1000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1000-1100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1100-1200</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1200-1300</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1300-1400</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1400-1500</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1500-1600</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1600-1700</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1700-1800</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1800-1900</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1900-2000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>2000-2100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> </table> </br></br></br> </div>';
+			let newtable = '<div class="item" id = "t' + tblinc + '" ><h2>Week of ' + ukDate + '<button class = "deltable" id = "' + tblinc + '" href="#myCarousel" data-slide="prev" onclick="DeleteTable(this)"><i class="bi bi-trash"></i></button></h2><table><tr> <th>Time</th> <th>Monday</th> <th>Tuesday</th> <th>Wednesday</th> <th>Thursday</th> <th>Friday</th> <th>Saturday</th> <th>Sunday</th> </tr> <tr> <th>0900-1000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1000-1100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1100-1200</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1200-1300</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1300-1400</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1400-1500</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1500-1600</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1600-1700</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1700-1800</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1800-1900</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1900-2000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>2000-2100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> </table> </br></br></br> </div>';
 	    
 			tables.insertAdjacentHTML("beforeend", newtable); //print existing table
 		}
@@ -401,12 +401,10 @@
 	            success: sendRefreshMessageToServer()
 		    });
 
-		  	data = <%- JSON.stringify(data) %>;
-			let tablecount = Object.keys(data).length;
 			data[tablecount] = data [0];				//copy values of primary row to new row
 			data[tablecount.toString()]['weekdate'] = weekdatesql;	//change id of new row to weekdate
 
-	    	let newtable = '<div class="item"><h2>Week of ' + weekdate + '<button class = "deltable" onclick="DeleteTable()"><i class="bi bi-trash"></i></button></h2><table><tr> <th>Time</th> <th>Monday</th> <th>Tuesday</th> <th>Wednesday</th> <th>Thursday</th> <th>Friday</th> <th>Saturday</th> <th>Sunday</th> </tr> <tr> <th>0900-1000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1000-1100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1100-1200</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1200-1300</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1300-1400</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1400-1500</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1500-1600</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1600-1700</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1700-1800</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1800-1900</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1900-2000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>2000-2100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> </table> </br></br></br> </div>';
+	    	let newtable = '<div class="item" id = "t' + tablecount + '"><h2>Week of ' + weekdate + '<button class = "deltable" id = "' + tablecount + '" href="#myCarousel" data-slide="prev" onclick="DeleteTable(this)"><i class="bi bi-trash"></i></button></h2><table><tr> <th>Time</th> <th>Monday</th> <th>Tuesday</th> <th>Wednesday</th> <th>Thursday</th> <th>Friday</th> <th>Saturday</th> <th>Sunday</th> </tr> <tr> <th>0900-1000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1000-1100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1100-1200</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1200-1300</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1300-1400</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1400-1500</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1500-1600</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1600-1700</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1700-1800</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1800-1900</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1900-2000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>2000-2100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> </table> </br></br></br> </div>';
 	    
 			tables.insertAdjacentHTML("beforeend", newtable); //print new table
 			
@@ -418,6 +416,31 @@
 				tds[index].innerHTML = '<div id="t ' + tablecount + ' c ' + cellinc + '">' + data[tablecount]["c"+cellinc.toString()] + '</div>' + tds[index].innerHTML + '<button id="' + tablecount + ' c ' + cellinc + '" class="button" onclick="SetCell(this)"><i class="bi bi-pencil"></i></button></section>';
 				index = index + 1;
 			}
+		}
+		tablecount++;
+	}
+
+	function DeleteTable(btn) {
+		timeout = setTimeout(delFunc, 500, btn); //for delay so that the carousel can change active element first before deleting the table element
+	}
+
+	function delFunc(btn){
+		let text = "Delete the table?";
+		if (confirm(text) == true) {
+			let tableid = data[btn.id.toString()]["id"];
+			console.log(tableid)
+			$.ajax({
+				type: 'POST',
+				url: 'http://localhost:3000/delTimetableTable',
+				data: { 'id': tableid },
+				success: sendRefreshMessageToServer()
+			});
+			const element = document.getElementById("t"+btn.id);
+
+			element.remove();
+		} 
+		else {
+
 		}
 	}
 
@@ -435,14 +458,16 @@
             document.getElementById(cell).innerHTML = text;		//Saves it to the cell# that triggered the function.
 
 	        const cellnumber = cell.split(" ");		//splits it at the spaces
-	        let cellname = "c" + cellnumber[3];		//gets the cell number; cellnumber[1] is the table#
-	        let tablename = data[cellnumber[1].toString()]["weekdate"]; //gets the ID of the row
-
+	        let cellname = "c" + cellnumber[3];		//gets the cell number; cellnumber[1] is the table#      
+	        let weekdate = new Date(data[cellnumber[1].toString()]["weekdate"]); //gets the ID of the row
+			let ukDate = weekdate.toLocaleString('en-GB', { timeZone: 'Europe/London' }).substr(0,10);
+			weekdatesql = ukDate.split("/");		//splits it at the /
+	  		weekdatesql = weekdatesql[2] + '-' + weekdatesql[1] + '-' + weekdatesql[0];
 
 	        $.ajax({
 	            type: 'POST',
 	            url: 'http://localhost:3000/updateTimetableTable',
-	            data: { 'student': text, 'table': tablename, 'cell': cellname },
+	            data: { 'student': text, 'table': weekdatesql, 'cell': cellname },
 	            success: sendRefreshMessageToServer()
 	        });
         }
