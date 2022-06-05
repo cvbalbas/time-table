@@ -418,17 +418,7 @@
 			
 		}
 
-		var tds = document.getElementsByTagName("td");
-
-		let index = 0;
-        
-        for ( tblinc = 0; tblinc < tablecount; tblinc++) {
-        	for (let cellinc = 0; cellinc < 84; cellinc++) {
-				tds[index].innerHTML = '<div id="t ' + tblinc + ' c ' + cellinc + '">' + data[tblinc.toString()]["c"+cellinc.toString()] + '</div>' + tds[index].innerHTML + '<button id="' + tblinc + ' c ' + cellinc + '" class="button" onclick="SetCell(this)"><i class="bi bi-pencil"></i></button></section>';
-				index = index + 1;
-			}
-        }
-
+		loadCellData()
 
 	}
 
@@ -494,14 +484,14 @@
 	        let cellname = "c" + cellnumber[3];		//gets the cell number; cellnumber[1] is the table#
 	        let tablename = data[cellnumber[1].toString()]["id"]; //gets the ID of the row
 
+		if (btn.id.substring(0,1) == "0"){
+			updateTimetableTable(text, tablename, cellname, "all")
+		}else{
+			updateTimetableTable(text,  tablename, cellname, "single")
+		}
 
-	        $.ajax({
-	            type: 'POST',
-	            url: 'http://localhost:3000/updateTimetableTable',
-	            data: { 'student': text, 'table': tablename, 'cell': cellname },
-	            success: sendRefreshMessageToServer()
-	        });
         }
+
     }
 
 
@@ -544,17 +534,14 @@
     const connection = new WebSocket(url)
 
     connection.onmessage = (e) => {
-        if (e.data != clientId.toString()) {
-            location.reload()
-        } else {
-            console.log(e.data)
-        }
-    }
-
-    var clientId = Math.random(1)
-
-    function sendRefreshMessageToServer() {
-        connection.send(clientId)
+	   	var message = e.data.split(" ")[0]
+	   	if (message == "data:"){
+			data = JSON.parse(removeFirstWord(e.data))
+			loadCellData()
+	    }else if (message = "rowsNotUpdated:"){
+			let rowsNotUpdated = JSON.parse(removeFirstWord(e.data))
+			loadRowsNotUpdatedAlert(rowsNotUpdated)
+		}
     }
 
 	function getActiveTableDate(){
@@ -582,6 +569,44 @@
 				document.getElementsByClassName("active")[0].classList.remove("active")
 				document.getElementsByClassName("thisWeek")[0].classList.add("active")
 			}
+		}
+	}
+
+	function updateTimetableTable(text, tablename, cellname, quantity){
+		$.ajax({
+	            type: 'POST',
+	            url: 'http://localhost:3000/updateTimetableTable',
+	            data: { 'student': text,'table': tablename, 'cell': cellname, 'quantity': quantity},
+	        });
+	}
+
+	function loadCellData(){
+		var tds = document.getElementsByTagName("td");
+		let index = 0;
+
+		for ( tblinc = 0; tblinc < tablecount; tblinc++) {
+			for (let cellinc = 0; cellinc < 84; cellinc++) {
+				tds[index].innerHTML = "";
+				tds[index].innerHTML = '<div id="t ' + tblinc + ' c ' + cellinc + '">' + data[tblinc.toString()]["c"+cellinc.toString()] + '</div>' + tds[index].innerHTML + '<button id="' + tblinc + ' c ' + cellinc + '" class="button" onclick="SetCell(this)"><i class="bi bi-pencil"></i></button></section>';
+				index = index + 1;
+			}
+		}
+	}
+
+	function removeFirstWord(str) {
+		const indexOfSpace = str.indexOf(' ');
+		if (indexOfSpace === -1) {
+			return '';
+		}
+		return str.substring(indexOfSpace + 1);
+ 	}
+
+	function loadRowsNotUpdatedAlert(rowsNotUpdated){
+		console.log(rowsNotUpdated)
+		for (var i=0; i<rowsNotUpdated.length; i++){
+			var date = new Date(rowsNotUpdated[i]["weekdate"])
+			date = date.toLocaleDateString("en-GB", {timeZone: "Europe/London"})
+			alert("Table not updated: Week of "+ date)
 		}
 	}
 

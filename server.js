@@ -3,8 +3,8 @@ var bodyParser = require('body-parser');
 const app = express();
 const mysql = require("mysql");
 const router = require("./routes");
-const WebSocket = require('ws')
-
+const WebSocket = require('ws');
+const { getDataFromTimetableTable } = require('./services');
 
 app.set('view engine', 'ejs')
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -17,14 +17,10 @@ var server = app.listen(3000, function () {
    console.log("Listening at http://%s:%s", host, port)
 })
 
-router(app);
-
 const wss = new WebSocket.Server({ port: 8080 })
- 
-wss.on('connection', function connection(ws) {
-    ws.on('message', function incoming(message) {
-        wss.clients.forEach(function each(client) {
-            client.send(message.toString());
-        });
-    })
+
+wss.on("connection", function connection(ws){
 })
+
+router(app, wss);
+
