@@ -397,6 +397,7 @@
 	let nameOfDay;
 	let weekOfDate = new Date()
 	weekOfDate.setDate(weekOfDate.getDate() - dayofweeknumber + 1)
+	weekOfDateMySQLFriendly = weekOfDate.toLocaleDateString("en-US", {timeZone: "Europe/London"})
 	weekOfDate  = weekOfDate.toLocaleDateString("en-GB", {timeZone: "Europe/London"})
 
 	function addButtons(){	//add buttons and unique btn ID for each using a for loop instead of copy paste within html
@@ -424,9 +425,7 @@
 
 	function AddTable(){		//When Add Table button is clicked, prints a new table
 		if (document.getElementsByClassName("active")[0].innerHTML.includes("t "+(data.length-1).toString())){
-						
 			let date = new Date(getActiveTableDate())
-			console.log(getActiveTableDate())
 			date.setDate(date.getDate() + 7);
 			date = date.toLocaleDateString("en-GB", {timeZone: "Europe/London"})
 
