@@ -19,8 +19,5 @@ var server = app.listen(3000, function () {
 
 const wss = new WebSocket.Server({ port: 8080 })
 
-wss.on("connection", function connection(ws){
-})
-
 router(app, wss);
 
