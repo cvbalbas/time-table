@@ -10,11 +10,13 @@ function getDataFromTimetableTable(tutor, callback){
     })
 }
 
-function updateTimetableTable(tutor, cell, student, tablename, quantity, wss){
+function updateTimetableTable(tutor, cell, student, tablename, quantity, wss) {
+    console.log(tutor + cell + student + tablename + quantity);
     var defaultRow = []
     var rowsNotUpdated
     if (quantity == "single"){
-        var sql = "UPDATE "+tutor+" SET `" + cell + "` = '" + student +"' WHERE `"+tutor+"`.`id` = '" + tablename+"'";
+        var sql = "UPDATE " + tutor + " SET `" + cell + "` = '" + student + "' WHERE `" + tutor + "`.`weekdate` = '" + tablename + "'";
+        console.log(sql);
         con.query(sql, function (err, result) {
             if (err) throw err;
             console.log(result.affectedRows + " record(s) updated");
