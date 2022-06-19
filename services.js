@@ -11,7 +11,6 @@ function getDataFromTimetableTable(tutor, callback){
 }
 
 function updateTimetableTable(tutor, cell, student, tablename, quantity, wss) {
-    console.log(tutor + cell + student + tablename + quantity);
     var defaultRow = []
     var rowsNotUpdated
     if (quantity == "single"){

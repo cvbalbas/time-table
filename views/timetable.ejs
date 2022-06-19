@@ -155,18 +155,6 @@
 			right: 0;
 		}
 
-		.addtable {
-			position: relative;
-			bottom: 0;
-			font-size: 35px;
-			background-color: transparent;
-			border: none;
-			color: #684BA3;
-			cursor: pointer;
-			float: right;
-			
-		}
-
 		.title {
 			background-color: transparent;
 			width: 25%;
@@ -181,12 +169,12 @@
 		}
 
 		.loader {
-			margin-left: auto;
-			margin-right: auto;
-			margin-top: 18%;
-			position: relative;
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
 			border: 16px solid #f3f3f3; /* Light grey */
-			border-top: 16px solid #7E5398; /* Blue */
+			border-top: 16px solid #354863; /* Blue */
 			border-radius: 50%;
 			width: 120px;
 			height: 120px;
@@ -195,8 +183,8 @@
 		
 
 		@keyframes spin {
-		0% { transform: rotate(0deg); }
-		100% { transform: rotate(360deg); }
+			0% { transform: rotate(0deg); }
+			100% { transform: rotate(360deg); }
 		}
 
 		.defaultbtn{
@@ -246,6 +234,23 @@
 		#tutorname{
 			text-align: center !important;
 		}
+
+		h3 {
+			float: left;
+		}
+
+		.btn-primary  {
+			background-color: #684BA3;
+			border-color: #684BA3;
+		}
+
+		.btn-primary:hover {
+			background-color: #7E5398;
+		}
+		
+		input[type="text"]:focus { 	/*change appearance when on focus*/
+			border-color: #684BA3;
+		}
 		
 	</style>
 </head>
@@ -267,6 +272,33 @@
 	<div id="myCarousel" class="carousel slide" style="top: 27px;" data-interval="false" data-wrap="false">
 	    <div id = "tables" class="carousel-inner">
 	  	</div>    
+	</div>
+
+	<!-------MODAL------>
+
+	<div class="modal fade" id="setCellModal" tabindex="-1" role="dialog" aria-labelledby="setCellModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+			  <div class="modal-header">
+			    <h3 class="modal-title" id="setCellModalLabel"></h3>
+			    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			      <span aria-hidden="true">&times;</span>
+			    </button>
+			  </div>
+			  <div class="modal-body">
+			    <form>
+			      <div class="form-group">
+			        <label for="student-name" class="col-form-label">Name of student:</label>
+			        <input type="text" class="form-control" id="student-name"></input>
+			      </div>
+			    </form>
+			  </div>
+			  <div class="modal-footer">
+			  	<button type="button" class="btn btn-secondary delete">Delete</button>
+			    <button id = "submit" type="button" class="btn btn-primary submit">Submit</button>
+			  </div>
+			</div>
+		</div>
 	</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/web-socket-js/1.0.0/web_socket.min.js" integrity="sha512-jtr9/t8rtBf1Sv832XjG1kAtUECQCqFnTAJWccL8CSC82VGzkPPih8rjtOfiiRKgqLXpLA1H/uQ/nq2bkHGWTQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -307,7 +339,7 @@
 		let weekformat = "past";
 		for ( var tblinc = 1; tblinc < tablecount; tblinc++ ) {
 
-			console.log(data[tblinc.toString()]["id"]);
+			//console.log(data[tblinc.toString()]["id"]);
 			
 			var date = new Date(data[tblinc.toString()]["weekdate"])
 			date = date.toLocaleDateString("en-GB", {timeZone: "Europe/London"})
@@ -324,7 +356,14 @@
 			
 		}
 
-        switch(dayofweeknumber) {
+		dayfcn(dayofweeknumber);
+        for (var i = 0; i < 13 ; i++) {		//highlights current day in second table
+			document.getElementsByClassName(nameOfDay)[i].style.backgroundColor = "rgba(240, 217, 255, 0.7)";
+		}
+	}
+
+	function dayfcn(number) {	//gets current day
+		switch(number) {
 		case 0: 
         	nameOfDay = 'sunday';
         	break;
@@ -353,18 +392,123 @@
         	nameOfDay = 'saturday';
         	break;
 		}
+	}
 
-		for (var i = 0; i < 13 ; i++) {	
-			document.getElementsByClassName(nameOfDay)[i].style.backgroundColor = "rgba(240, 217, 255, 0.7)";
+	$('#setCellModal').on('shown.bs.modal', function() {	//focus on text input; automatically puts cursor in the input field
+		$('#student-name').focus();
+	})
+
+	$(document).on('show.bs.modal','#setCellModal', function (event) { //detect which row and column triggered the modal
+		var button = $(event.relatedTarget) 
+		var recipient = button.data('id') 
+
+		timeday = recipient.split(" ");
+		var day = timeday[1] % 7;
+		day = day + 1;
+		if (day == 7) {
+			day = 0;
+		}
+		dayfcn(day);
+		nameOfDay = nameOfDay.charAt(0).toUpperCase() + nameOfDay.slice(1);
+
+		let time
+		if (timeday[1] < 7) {
+			time = '0900-1000'
+		} else if (timeday[1] < 14) {
+			time = '1000-1100'
+		} else if (timeday[1] < 21) {
+			time = '1100-1200'
+		} else if (timeday[1] < 28) {
+			time = '1200-1300'
+		} else if (timeday[1] < 35) {
+			time = '1300-1400'
+		} else if (timeday[1] < 42) {
+			time = '1400-1500'
+		} else if (timeday[1] < 49) {
+			time = '1500-1600'
+		} else if (timeday[1] < 56) {
+			time = '1600-1700'
+		} else if (timeday[1] < 63) {
+			time = '1700-1800'
+		} else if (timeday[1] < 70) {
+			time = '1800-1900'
+		} else if (timeday[1] < 77) {
+			time = '1900-2000'
+		} else if (timeday[1] < 84) {
+			time = '2000-2100'
+		} else {
+			time = 'error'
 		}
 
-	}
+		var modal = $(this)
+		modal.find('.modal-title').text(nameOfDay + ' ' + time)
+		let cell = "t " + timeday[0] + " c " + timeday[1];
+		modal.find('.modal-body input').val(document.getElementById(cell).innerHTML)
+	})
+
+	$('.submit').on('click', function(){	//New SetCell function
+		var getval = $('#student-name').val();
+
+		if (getval == null || getval == "") {
+		}
+
+		else {
+		    let cell = "t " + timeday[0] + " c " + timeday[1];
+		    let cellname = "c" + timeday[1]; 
+		    document.getElementById(cell).innerHTML = getval; //Saves it to the cell# that triggered the function.
+		    let tablename = data[timeday[0].toString()]["weekdate"]; //gets the ID of the row
+
+	        let date2 = new Date(tablename)
+	        if (date2.toString() !== "Invalid Date") {
+				tablename = date2.toLocaleDateString("en-GB", {timeZone: "Europe/London"})
+			}
+	        tablename = tablename.slice(0,10).split("/").reverse().join("-");
+
+
+
+			if (timeday[0] == 0){
+				updateTimetableTable(getval, tablename, cellname, "all")
+			}else{
+				updateTimetableTable(getval, tablename, cellname, "single")
+			}
+		}
+
+		$('#setCellModal').modal('hide');
+	})
+
+	$('.delete').on('click', function(){ //delete = setting cell to blank string
+			getval = "";
+		    let cell = "t " + timeday[0] + " c " + timeday[1];
+		    let cellname = "c" + timeday[1]; 
+		    document.getElementById(cell).innerHTML = getval; //Saves it to the cell# that triggered the function.
+		    let tablename = data[timeday[0].toString()]["weekdate"]; //gets the ID of the row
+
+	        let date2 = new Date(tablename)
+	        if (date2.toString() !== "Invalid Date") {
+				tablename = date2.toLocaleDateString("en-GB", {timeZone: "Europe/London"})
+			}
+	        tablename = tablename.slice(0,10).split("/").reverse().join("-");
+
+
+
+			if (timeday[0] == 0){
+				updateTimetableTable(getval, tablename, cellname, "all")
+			}else{
+				updateTimetableTable(getval, tablename, cellname, "single")
+			}
+
+		$('#setCellModal').modal('hide');
+	})
+
+
+	$('#setCellModal').on('hidden.bs.modal', function () {		//resets the text field
+   		$(this).find('form').trigger('reset');
+	})
 
 	function AddTable(){		//When Add Table button is clicked, prints a new table
 		if (document.getElementsByClassName("active")[0].innerHTML.includes("t "+(data.length-1).toString())){
 						
 			let date = new Date(getActiveTableDate())
-			console.log(getActiveTableDate())
 			date.setDate(date.getDate() + 7);
 			date = date.toLocaleDateString("en-GB", {timeZone: "Europe/London"})
 
@@ -387,12 +531,11 @@
 			
 				tables.insertAdjacentHTML("beforeend", newtable); //print new table
 				
-				//console.log(tablecount);
 				var index = tablecount*84;	//one table = 84 cells. First cell in new table should start at multiples of 84
 				var tds = document.getElementsByTagName("td");	//get all td elements
 
 				for (let cellinc = 0; cellinc < 84; cellinc++) {
-					tds[index].innerHTML = '<div id="t ' + tablecount + ' c ' + cellinc + '">' + data[tablecount]["c"+cellinc.toString()] + '</div>' + tds[index].innerHTML + '<button id="' + tablecount + ' c ' + cellinc + '" class="button" onclick="SetCell(this)"><i class="bi bi-pencil"></i></button></section>';
+					tds[index].innerHTML = '<div id="t ' + tablecount + ' c ' + cellinc + '">' + data[tablecount]["c"+cellinc.toString()] + '</div>' + tds[index].innerHTML + '<button id="' + tablecount + ' c ' + cellinc + '" class="button" data-toggle="modal" data-target="#setCellModal" data-id="' + tablecount + ' ' + cellinc +'"><i class="bi bi-pencil"></i></button></section>';
 					index = index + 1;
 				}
 			}
@@ -402,58 +545,17 @@
 
 	}
 
-
-    function SetCell(btn) {				//when button is clicked, a prompt shows asking for a name to add.
-        let cell = "t " + btn.id;
-        let text;
-        let person = prompt("Please enter name:");
-
-        if (person == null || person == "") {
-        }
-
-        else {
-            text = person ;
-            document.getElementById(cell).innerHTML = text;		//Saves it to the cell# that triggered the function.
-
-	        const cellnumber = cell.split(" ");		//splits it at the spaces
-	        let cellname = "c" + cellnumber[3];		//gets the cell number; cellnumber[1] is the table#
-	        let tablename = data[cellnumber[1].toString()]["weekdate"]; //gets the ID of the row
-
-	        console.log("before:" + tablename)
-	        let date2 = new Date(tablename)
-	        console.log(date2)
-	        if (date2.toString() !== "Invalid Date") {
-				tablename = date2.toLocaleDateString("en-GB", {timeZone: "Europe/London"})
-				console.log("local" + tablename)
-			}
-	        tablename = tablename.slice(0,10).split("/").reverse().join("-");
-
-
-	        console.log("SetCell" + tablename + cellname + text)
-
-		if (btn.id.substring(0,1) == "0"){
-			updateTimetableTable(text, tablename, cellname, "all")
-		}else{
-			updateTimetableTable(text, tablename, cellname, "single")
-		}
-
-        }
-
-    }
-
     var reload = true;
 
     connection.onmessage = (e) => {
 	   	var message = e.data.split(" ")[0]
 		if (message == "tutor:"){
 			let tutor = removeFirstWord(e.data)
-			console.log(localStorage.getItem('tutor'))
-			console.log(tutor)
 			if (tutor == localStorage.getItem('tutor')){
-				console.log("do reload")
+				//console.log("do reload")
 				reload = true
 			}else{
-				console.log("don't reload")
+				//console.log("don't reload")
 				reload = false
 			}
 		}
@@ -491,8 +593,7 @@
 	}
 
 	function detectActive(btn){
-		//console.log(document.getElementsByClassName("item")[1] == document.getElementsByClassName("active")[0]);
-		//console.log(btn.id);
+		//if table before default is active
 		if ((document.getElementsByClassName("item")[1] == document.getElementsByClassName("active")[0] || document.getElementsByClassName("item")[0] == document.getElementsByClassName("active")[0]) && btn.id == 'left') {
 			document.body.style.transition = 'background-color 500ms linear';
 			document.body.style.backgroundColor = '#F0D9FF';
@@ -515,8 +616,6 @@
 		document.body.style.backgroundColor = 'ghostwhite';
 		
 		for ( var tblinc = 1; tblinc < tablecount; tblinc++ ) {
-			//console.log(tblinc)
-			//console.log(data[tblinc.toString()]["weekdate"])
 			var date = new Date(data[tblinc.toString()]["weekdate"])
 			date = date.toLocaleDateString("en-GB", {timeZone: "Europe/London"})
 
@@ -537,12 +636,12 @@
 	}
 
 	function loadCellData(){
-		console.log("loadCellData")
+		//console.log("loadCellData")
 		var tds = document.getElementsByTagName("td");
 
 		let index = 0;
         
-        for ( tblinc = 0; tblinc < tablecount; tblinc++) {
+        for ( tblinc = 0; tblinc < tablecount; tblinc++) { //remove buttons for past weeks
         	if (tblinc < currentweektable && tblinc != 0) {
 	        	for (let cellinc = 0; cellinc < 84; cellinc++) {
 					tds[index].innerHTML = "";
@@ -550,10 +649,10 @@
 					index = index + 1;
 				}
 			}
-			else {
+			else {	
 				for (let cellinc = 0; cellinc < 84; cellinc++) {
 					tds[index].innerHTML = "";
-					tds[index].innerHTML = '<div id="t ' + tblinc + ' c ' + cellinc + '">' + data[tblinc.toString()]["c"+cellinc.toString()] + '</div>' + tds[index].innerHTML + '<button id="' + tblinc + ' c ' + cellinc + '" class="button" onclick="SetCell(this)"><i class="bi bi-pencil"></i></button></section>';
+					tds[index].innerHTML = '<div id="t ' + tblinc + ' c ' + cellinc + '">' + data[tblinc.toString()]["c"+cellinc.toString()] + '</div>' + tds[index].innerHTML + '<button id="' + tblinc + ' c ' + cellinc + '" class="button" data-toggle="modal" data-target="#setCellModal" data-id="' + tblinc + ' ' + cellinc +'"><i class="bi bi-pencil"></i></button></section>';
 					index = index + 1;
 				}
         	}
@@ -575,6 +674,17 @@
 			alert("Table not updated: Week of "+ date)
 		}
 	}
+
+	$(document).keypress(function (e) { //click submit within modal when Enter is pressed
+		var key = e.which;
+		if(key == 13 && $('#setCellModal').is(':visible')) {  
+			$('#submit').click();
+			return false;
+		}
+		else if (key==13) {
+			e.preventDefault();
+		}
+	});  
 
 
 </script> 
