@@ -202,7 +202,8 @@
 		.default h2, .default td, .thisWeek h2, .thisWeek td {
 			color: #4F4F4F;
 		}
-		.default tr:hover, .default td:hover::after {
+
+		.future tr:hover, .future td:hover::after, .default tr:hover, .default td:hover::after {
 			background-color: rgba(249, 249, 249, 0.5);
 		}
 
@@ -258,7 +259,7 @@
 <body>
     <!-- Left and right controls -->
 	<div class = "title">
-    	<button class="chevron rightbtn" onclick="detectActive(this); AddTable();" href="#myCarousel" data-slide="next">
+    	<button class="chevron rightbtn" id = "right" onclick="detectActive(this); AddTable();" href="#myCarousel" data-slide="next">
 	    	<span class="right"> › </span>
 	    </button>
     	<button class="chevron leftbtn" id = "left" onclick="detectActive(this)" href="#myCarousel" data-slide="prev">
@@ -358,7 +359,7 @@
 
 		dayfcn(dayofweeknumber);
         for (var i = 0; i < 13 ; i++) {		//highlights current day in second table
-			document.getElementsByClassName(nameOfDay)[i].style.backgroundColor = "rgba(240, 217, 255, 0.7)";
+			document.getElementsByClassName(nameOfDay)[i].style.backgroundColor = "rgba(240, 217, 255, 0.5)";
 		}
 	}
 
@@ -593,14 +594,25 @@
 	}
 
 	function detectActive(btn){
-		//if table before default is active
+		//changes default table bg; if table before default is active
 		if ((document.getElementsByClassName("item")[1] == document.getElementsByClassName("active")[0] || document.getElementsByClassName("item")[0] == document.getElementsByClassName("active")[0]) && btn.id == 'left') {
 			document.body.style.transition = 'background-color 500ms linear';
 			document.body.style.backgroundColor = '#F0D9FF';
 		}
-		else {
+		//changes currentweek table bg; if table before and after currentweek table is active
+		else if (((document.getElementsByClassName("item")[currentweektable-1] == document.getElementsByClassName("active")[0] && btn.id == 'right') || (document.getElementsByClassName("item")[currentweektable+1] == document.getElementsByClassName("active")[0]) && btn.id == 'left')) {
 			document.body.style.transition = 'background-color 500ms linear';
 			document.body.style.backgroundColor = 'ghostwhite';
+		}
+		//changes future tables bg; if currentweek/future table is active
+		else if ((document.getElementsByClassName("item")[currentweektable] == document.getElementsByClassName("active")[0] && btn.id == 'right') || (document.getElementsByClassName("active")[0].classList.contains("future"))) {
+			document.body.style.transition = 'background-color 500ms linear';
+			document.body.style.backgroundColor = '#DEDDFF';
+		}
+		//changes past tables bg
+		else {
+			document.body.style.transition = 'background-color 500ms linear';
+			document.body.style.backgroundColor = '#F3F1F5';
 		}
 	}
 
@@ -641,7 +653,7 @@
 
 		let index = 0;
         
-        for ( tblinc = 0; tblinc < tablecount; tblinc++) { //remove buttons for past weeks
+        for (tblinc = 0; tblinc < tablecount; tblinc++) { //remove buttons for past weeks
         	if (tblinc < currentweektable && tblinc != 0) {
 	        	for (let cellinc = 0; cellinc < 84; cellinc++) {
 					tds[index].innerHTML = "";
