@@ -157,12 +157,12 @@
 
 		.title {
 			background-color: transparent;
-			width: 25%;
+			width: 30%;
 			height: 1%;
 			position: absolute;
 			margin-left: auto;
 	  		margin-right: auto;
-			left: 65%;
+			left: 60%;
 			top: 35px;
 			z-index: 2;
 			display: table-row;
@@ -189,6 +189,7 @@
 
 		.defaultbtn{
 			width: 50px;
+			margin-right: 20px;
 		}
 
 		.thisWeekbtn{
@@ -232,6 +233,7 @@
 			margin-right: -10px;
 		}
 
+
 		#tutorname{
 			text-align: center !important;
 		}
@@ -264,7 +266,8 @@
 	    </button>
     	<button class="chevron leftbtn" id = "left" onclick="detectActive(this)" href="#myCarousel" data-slide="prev">
     		<span class="left"> ‹ </span>
-	    </button>	
+	    </button>
+		<button class ="chevron addtutorbtn" onclick="addTutor()"><i class="bi bi-person-plus-fill"></i></button>
 		<button class ="chevron tutorbtn" onclick="changeTutor()"><i class="bi bi-person"></i><span id ="tutorname"></span></button>
 		<button class ="chevron defaultbtn" onclick="displayDefault()"><i class="bi bi-pen"></i></button>
 		<button class ="chevron thisWeekbtn" onclick="displayThisWeek()"><i class="bi bi-calendar-event"></i></button>
@@ -310,11 +313,17 @@
 
 	var data = [{}]
 	var tablecount
-	var tutors = ["caryl", "eena"]
+	var tutors = []
 
 	if (!localStorage.getItem('tutor')){
 		localStorage.setItem('tutor', tutors[0])
 	}
+
+	$.ajax({
+		type: 'POST',			//copy values of primary row to new row, with new id = weekdate
+		url: 'http://localhost:3000/getTutorNames',
+		success: function(result){tutors = result}
+	});
 
 	$.ajax({
 		type: 'POST',			//copy values of primary row to new row, with new id = weekdate
@@ -697,9 +706,18 @@
 			e.preventDefault();
 		}
 	});  
+	function addTutor(){
+		let newTutor = prompt()
+		$.ajax({
+	            type: 'POST',
+	            url: 'http://localhost:3000/addTutor',
+	            data: {'newTutor': newTutor},
+				success: function(result){console.log(result);localStorage.setItem('tutor', newTutor); window.location.reload()}
+	        });
+	}
 
 
 </script> 
 
 </body>
-</html>
+</html
