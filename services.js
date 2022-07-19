@@ -1,4 +1,4 @@
-module.exports = {getDataFromTimetableTable, updateTimetableTable, addTimetableTable, refreshTimetableBrowserData}
+module.exports = {getDataFromTimetableTable, updateTimetableTable, addTimetableTable, refreshTimetableBrowserData, addTutor, getTutorNames}
 const con = require("./connect")
 
 function getDataFromTimetableTable(tutor, callback){
@@ -10,7 +10,20 @@ function getDataFromTimetableTable(tutor, callback){
     })
 }
 
-function updateTimetableTable(tutor, cell, student, tablename, quantity, wss) {
+function getTutorNames(callback){
+    var tutorNames = []
+    var sql = "SELECT table_name FROM information_schema.tables WHERE table_schema = 'timetable';"
+    con.query(sql, function (err, result) { 
+        if (err) throw err;
+        for (var i=0; i<result.length; i++){
+           tutorNames.push(result[i]["table_name"])
+        }
+        callback(tutorNames)
+    })
+}
+
+
+function updateTimetableTable(tutor, cell, student, tablename, quantity, wss){
     var defaultRow = []
     var rowsNotUpdated
     if (quantity == "single"){
@@ -63,6 +76,25 @@ function addTimetableTable(tutor, weekdate) {
     });
 }
 
+function addTutor(newTutor){
+    var sql = "CREATE TABLE `timetable`.`"+newTutor+"` ( `id` INT NOT NULL AUTO_INCREMENT , `weekdate` DATE NOT NULL , `c0` VARCHAR(20) NOT NULL,`c1` VARCHAR(20) NOT NULL,`c2` VARCHAR(20) NOT NULL,`c3` VARCHAR(20) NOT NULL,`c4` VARCHAR(20) NOT NULL,`c5` VARCHAR(20) NOT NULL,`c6` VARCHAR(20) NOT NULL,`c7` VARCHAR(20) NOT NULL,`c8` VARCHAR(20) NOT NULL,`c9` VARCHAR(20) NOT NULL,`c10` VARCHAR(20) NOT NULL,`c11` VARCHAR(20) NOT NULL,`c12` VARCHAR(20) NOT NULL,`c13` VARCHAR(20) NOT NULL,`c14` VARCHAR(20) NOT NULL,`c15` VARCHAR(20) NOT NULL,`c16` VARCHAR(20) NOT NULL,`c17` VARCHAR(20) NOT NULL,`c18` VARCHAR(20) NOT NULL,`c19` VARCHAR(20) NOT NULL,`c20` VARCHAR(20) NOT NULL,`c21` VARCHAR(20) NOT NULL,`c22` VARCHAR(20) NOT NULL,`c23` VARCHAR(20) NOT NULL,`c24` VARCHAR(20) NOT NULL,`c25` VARCHAR(20) NOT NULL,`c26` VARCHAR(20) NOT NULL,`c27` VARCHAR(20) NOT NULL,`c28` VARCHAR(20) NOT NULL,`c29` VARCHAR(20) NOT NULL,`c30` VARCHAR(20) NOT NULL,`c31` VARCHAR(20) NOT NULL,`c32` VARCHAR(20) NOT NULL,`c33` VARCHAR(20) NOT NULL,`c34` VARCHAR(20) NOT NULL,`c35` VARCHAR(20) NOT NULL,`c36` VARCHAR(20) NOT NULL,`c37` VARCHAR(20) NOT NULL,`c38` VARCHAR(20) NOT NULL,`c39` VARCHAR(20) NOT NULL,`c40` VARCHAR(20) NOT NULL,`c41` VARCHAR(20) NOT NULL,`c42` VARCHAR(20) NOT NULL,`c43` VARCHAR(20) NOT NULL,`c44` VARCHAR(20) NOT NULL,`c45` VARCHAR(20) NOT NULL,`c46` VARCHAR(20) NOT NULL,`c47` VARCHAR(20) NOT NULL,`c48` VARCHAR(20) NOT NULL,`c49` VARCHAR(20) NOT NULL,`c50` VARCHAR(20) NOT NULL,`c51` VARCHAR(20) NOT NULL,`c52` VARCHAR(20) NOT NULL,`c53` VARCHAR(20) NOT NULL,`c54` VARCHAR(20) NOT NULL,`c55` VARCHAR(20) NOT NULL,`c56` VARCHAR(20) NOT NULL,`c57` VARCHAR(20) NOT NULL,`c58` VARCHAR(20) NOT NULL,`c59` VARCHAR(20) NOT NULL,`c60` VARCHAR(20) NOT NULL,`c61` VARCHAR(20) NOT NULL,`c62` VARCHAR(20) NOT NULL,`c63` VARCHAR(20) NOT NULL,`c64` VARCHAR(20) NOT NULL,`c65` VARCHAR(20) NOT NULL,`c66` VARCHAR(20) NOT NULL,`c67` VARCHAR(20) NOT NULL,`c68` VARCHAR(20) NOT NULL,`c69` VARCHAR(20) NOT NULL,`c70` VARCHAR(20) NOT NULL,`c71` VARCHAR(20) NOT NULL,`c72` VARCHAR(20) NOT NULL,`c73` VARCHAR(20) NOT NULL,`c74` VARCHAR(20) NOT NULL,`c75` VARCHAR(20) NOT NULL,`c76` VARCHAR(20) NOT NULL,`c77` VARCHAR(20) NOT NULL,`c78` VARCHAR(20) NOT NULL,`c79` VARCHAR(20) NOT NULL,`c80` VARCHAR(20) NOT NULL,`c81` VARCHAR(20) NOT NULL,`c82` VARCHAR(20) NOT NULL,`c83` VARCHAR(20) NOT NULL, PRIMARY KEY (`id`)) ENGINE = InnoDB;"
+    con.query(sql, function (err, result) {
+        if (err) throw err;
+        let todayDate = new Date();
+        let dayofweeknumber = todayDate.getDay();
+        let weekOfDate = new Date()
+        weekOfDate.setDate(weekOfDate.getDate() - dayofweeknumber + 1)
+        weekOfDate = weekOfDate.toLocaleDateString("en-GB", {timeZone: "Europe/London"})
+        weekOfDate = weekOfDate.slice(0,10).split("/").reverse().join("-")
+        var sql2 = "INSERT INTO `"+newTutor+"` (`id`, `weekdate`, `c0`, `c1`, `c2`, `c3`, `c4`, `c5`, `c6`, `c7`, `c8`, `c9`, `c10`, `c11`, `c12`, `c13`, `c14`, `c15`, `c16`, `c17`, `c18`, `c19`, `c20`, `c21`, `c22`, `c23`, `c24`, `c25`, `c26`, `c27`, `c28`, `c29`, `c30`, `c31`, `c32`, `c33`, `c34`, `c35`, `c36`, `c37`, `c38`, `c39`, `c40`, `c41`, `c42`, `c43`, `c44`, `c45`, `c46`, `c47`, `c48`, `c49`, `c50`, `c51`, `c52`, `c53`, `c54`, `c55`, `c56`, `c57`, `c58`, `c59`, `c60`, `c61`, `c62`, `c63`, `c64`, `c65`, `c66`, `c67`, `c68`, `c69`, `c70`, `c71`, `c72`, `c73`, `c74`, `c75`, `c76`, `c77`, `c78`, `c79`, `c80`, `c81`, `c82`, `c83`) VALUES ('1', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');INSERT INTO `"+newTutor+"` (`id`, `weekdate`, `c0`, `c1`, `c2`, `c3`, `c4`, `c5`, `c6`, `c7`, `c8`, `c9`, `c10`, `c11`, `c12`, `c13`, `c14`, `c15`, `c16`, `c17`, `c18`, `c19`, `c20`, `c21`, `c22`, `c23`, `c24`, `c25`, `c26`, `c27`, `c28`, `c29`, `c30`, `c31`, `c32`, `c33`, `c34`, `c35`, `c36`, `c37`, `c38`, `c39`, `c40`, `c41`, `c42`, `c43`, `c44`, `c45`, `c46`, `c47`, `c48`, `c49`, `c50`, `c51`, `c52`, `c53`, `c54`, `c55`, `c56`, `c57`, `c58`, `c59`, `c60`, `c61`, `c62`, `c63`, `c64`, `c65`, `c66`, `c67`, `c68`, `c69`, `c70`, `c71`, `c72`, `c73`, `c74`, `c75`, `c76`, `c77`, `c78`, `c79`, `c80`, `c81`, `c82`, `c83`) VALUES ('2', '"+weekOfDate+"', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');"
+        con.query(sql2, function (err, result) {
+            if (err) throw err;
+            console.log("New tutor added: "+ newTutor);
+        });
+    });
+
+}
+
 function refreshTimetableBrowserData(wss, rowsNotUpdated, tutor){
     wss.clients.forEach(function each(client) {
         getDataFromTimetableTable(tutor, function (data){
@@ -72,5 +104,6 @@ function refreshTimetableBrowserData(wss, rowsNotUpdated, tutor){
         })
     });
 }
+
 
 

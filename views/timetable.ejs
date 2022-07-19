@@ -277,6 +277,7 @@
 			margin-right: -10px;
 		}
 
+
 		#tutorname{
 			text-align: center !important;
 		}
@@ -311,7 +312,8 @@
 	    </button>
     	<button class="chevron leftbtn" id = "left" onclick="detectActive(this)" href="#myCarousel" data-slide="prev">
     		<span class="left"> ‹ </span>
-	    </button>	
+	    </button>
+		<button class ="chevron addtutorbtn" onclick="addTutor()"><i class="bi bi-person-plus-fill"></i></button>
 		<button class ="chevron tutorbtn" onclick="changeTutor()"><i class="bi bi-person"></i><span id ="tutorname"></span></button>
 		<button class ="chevron defaultbtn" onclick="displayDefault()"><i class="bi bi-pen"></i></button>
 		<button class ="chevron thisWeekbtn" onclick="displayThisWeek()"><i class="bi bi-calendar-event"></i></button>
@@ -374,12 +376,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/web-socket-js/1.0.0/web_socket.min.js" integrity="sha512-jtr9/t8rtBf1Sv832XjG1kAtUECQCqFnTAJWccL8CSC82VGzkPPih8rjtOfiiRKgqLXpLA1H/uQ/nq2bkHGWTQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
-	const url = 'ws://localhost:8080'
+	var urlLocation = location.origin
+	const url = location.origin.replace(/^http/, 'ws')
     const connection = new WebSocket(url)
 
 	var data = [{}]
 	var tablecount
-	var tutors = ["caryl", "eena"]
+	var tutors = []
 
 	if (!localStorage.getItem('tutor')){
 		localStorage.setItem('tutor', tutors[0])
@@ -387,7 +390,13 @@
 
 	$.ajax({
 		type: 'POST',			//copy values of primary row to new row, with new id = weekdate
-		url: 'http://localhost:3000/getTimetableData',
+		url: urlLocation+'/getTutorNames',
+		success: function(result){tutors = result}
+	});
+
+	$.ajax({
+		type: 'POST',			//copy values of primary row to new row, with new id = weekdate
+		url: urlLocation+'/getTimetableData',
 		data: {'tutor': localStorage.getItem('tutor')},
 		success: function(result){data = JSON.parse(result); tablecount = Object.keys(data).length;	loadTable(); loadCellData()}
 	});
@@ -608,7 +617,7 @@
 			else {			//if there's an inputted value in prompt, add table
 				$.ajax({
 					type: 'POST',			//copy values of primary row to new row, with new id = weekdate
-					url: 'http://localhost:3000/addTimetableTable',
+					url: urlLocation+'/addTimetableTable',
 					data: {'tutor': localStorage.getItem('tutor'), 'weekdate': weekdate.toString().split("/").reverse().join("-")},
 				});
 
@@ -729,7 +738,7 @@
 		document.getElementsByClassName("loader")[0].style.display = "block"
 		$.ajax({
 	            type: 'POST',
-	            url: 'http://localhost:3000/updateTimetableTable',
+	            url: urlLocation+'/updateTimetableTable',
 	            data: {'tutor': localStorage.getItem('tutor'),'student': text,'tablename': tablename, 'cell': cellname, 'quantity': quantity},
 	        });
 	}
@@ -782,6 +791,15 @@
 			e.preventDefault();
 		}
 	});  
+	function addTutor(){
+		let newTutor = prompt()
+		$.ajax({
+	            type: 'POST',
+	            url: urlLocation+'/addTutor',
+	            data: {'newTutor': newTutor},
+				success: function(result){console.log(result);localStorage.setItem('tutor', newTutor); window.location.reload()}
+	        });
+	}
 
 	function hourCount() {
 		var thisweek = document.getElementsByClassName("active")[0];
