@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 	<!-- Add icon library -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
@@ -14,17 +15,60 @@
 		body {
 			background-color: ghostwhite;
 		}
+
 		table {
-			border:  3px solid white;
-			border-collapse: collapse;	/*no borders*/
+		    border: 5px solid #6D3C8B;
+		    border-collapse: separate;
+		    border-radius: 20px;
 			width: 80%;
 			margin-left: auto;
 	  		margin-right: auto;
 	  		font-family: "Gill Sans", sans-serif;
 	  		z-index: 1;				/*table is over the highlight*/
 	  		overflow: hidden;		/*cuts off the column highlight as to not overflow*/
-	  		border-radius: 20px;	/*rounded corners*/
 	  		box-shadow: 5px 10px 50px rgba(0, 0, 0, 0.25); /*offset, offset, blur, colour of shadow*/
+		}
+
+		.modaltable {
+		    border: 0px;
+			width: 100%;
+		    border-radius: 20px;
+	  		font-family: "Gill Sans", sans-serif;
+	  		box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.25);
+	  		border-radius: 0px;
+		}
+
+		.modaltable td {
+		    padding: 5px !important;
+
+		}
+
+		.modal-body {
+		    overflow-y: auto;
+		    max-height: 350px;
+		}
+
+		.modal-body::-webkit-scrollbar { 
+    		display: none;  /* Safari and Chrome */
+		}
+
+		.modal-open .modal {
+			overflow-y: hidden !important;
+		}
+
+		.modal {
+			position:  absolute;
+			float: left;
+			left:  50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+		}
+
+		.modal-header {
+			background-color: #684BA3; 
+			text-align: center; 
+			font-weight: bold; 
+			color: ghostwhite;
 		}
 
 		h2 {
@@ -47,7 +91,6 @@
 			word-break: break-word; /*wrap words*/
 			color: #4F4F4F;
 		}
-
 
 		th {
 			background-color: #4F4F4F;	/*colour will stay the same even on hover*/
@@ -85,7 +128,6 @@
 		
 		.chevron {
 			display: inline-block; /*the top and bottom margins/paddings are respected; does not add a line-break after the element, so the element can sit next to other elements.*/
-			border-radius: 0px;
 			background-color: #684BA3;
 			border: none;
 			color: #FFFFFF;
@@ -157,12 +199,12 @@
 
 		.title {
 			background-color: transparent;
-			width: 30%;
+			width: 50%;
 			height: 1%;
 			position: absolute;
 			margin-left: auto;
 	  		margin-right: auto;
-			left: 60%;
+			left: 40%;	/*=100-width-10%*/
 			top: 35px;
 			z-index: 2;
 			display: table-row;
@@ -189,7 +231,6 @@
 
 		.defaultbtn{
 			width: 50px;
-			margin-right: 20px;
 		}
 
 		.thisWeekbtn{
@@ -208,6 +249,9 @@
 			background-color: rgba(249, 249, 249, 0.5);
 		}
 
+		.past table {
+		    border: 5px solid #EDEDFF !important;
+		}
 		.past th { 
 			background-color: #BEAEE2 !important;
 			color: #F0D9FF;
@@ -254,6 +298,8 @@
 		input[type="text"]:focus { 	/*change appearance when on focus*/
 			border-color: #684BA3;
 		}
+
+
 		
 	</style>
 </head>
@@ -271,33 +317,55 @@
 		<button class ="chevron tutorbtn" onclick="changeTutor()"><i class="bi bi-person"></i><span id ="tutorname"></span></button>
 		<button class ="chevron defaultbtn" onclick="displayDefault()"><i class="bi bi-pen"></i></button>
 		<button class ="chevron thisWeekbtn" onclick="displayThisWeek()"><i class="bi bi-calendar-event"></i></button>
+		<button class="chevron thisWeekbtn" data-toggle="modal" data-target="#hoursModal"><i class="bi bi-clock-history"></i></button>'
     </div>
 	<!--start of carousel-->
 	<div id="myCarousel" class="carousel slide" style="top: 27px;" data-interval="false" data-wrap="false">
 	    <div id = "tables" class="carousel-inner">
 	  	</div>    
 	</div>
+	<!-------COUNT HOURS MODAL------>
+	<div class="modal fade" id="hoursModal" tabindex="-1" role="dialog" aria-labelledby="hoursModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <div class="modal-title" id="hoursModalLabel">
+	        	<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float: right; color: ghostwhite;">
+	          	<span aria-hidden="true">&times;</span>
+	        	</button>
+	        	<span style="width: 50%; float:left;"><p style="margin: 0px 0px 0px;">Student</p></span>
+	        	<span style="width: 50%;"><p style="margin: 0px 0px 0px;">Hours</p></span>
+	        </div>
+	      </div>
+	      <div class="modal-body">
+				<table class = "modaltable" id = "modaltable">
+			    	
+			    </table>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 
-	<!-------MODAL------>
+	<!-------SET CELL MODAL------>
 
-	<div class="modal fade" id="setCellModal" tabindex="-1" role="dialog" aria-labelledby="setCellModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-			  <div class="modal-header">
-			    <h3 class="modal-title" id="setCellModalLabel"></h3>
-			    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			      <span aria-hidden="true">&times;</span>
+	<div class="modal fade inmodal" id="setCellModal" tabindex="-1" role="dialog" aria-labelledby="setCellModalLabel" aria-hidden="true">
+		<div class="modal-dialog inmodal" role="document">
+			<div class="modal-content inmodal">
+			  <div class="modal-header inmodal">
+			    <h3 class="modal-title inmodal" id="setCellModalLabel"></h3>
+			    <button type="button" class="close inmodal" data-dismiss="modal" aria-label="Close" style="color: ghostwhite;">
+			      <span aria-hidden="true" class = "inmodal">&times;</span>
 			    </button>
 			  </div>
-			  <div class="modal-body">
+			  <div class="modal-body inmodal">
 			    <form>
-			      <div class="form-group">
-			        <label for="student-name" class="col-form-label">Name of student:</label>
-			        <input type="text" class="form-control" id="student-name"></input>
+			      <div class="form-group inmodal">
+			        <label for="student-name" class="col-form-label inmodal">Name of student:</label>
+			        <input type="text" class="form-control inmodal" id="student-name"></input>
 			      </div>
 			    </form>
 			  </div>
-			  <div class="modal-footer">
+			  <div class="modal-footer inmodal">
 			  	<button type="button" class="btn btn-secondary delete">Delete</button>
 			    <button id = "submit" type="button" class="btn btn-primary submit">Submit</button>
 			  </div>
@@ -339,6 +407,7 @@
 	let dayofweeknumber = todayDate.getDay();
 	let nameOfDay;
 	let weekOfDate = new Date()
+	let currentweektable;
 	weekOfDate.setDate(weekOfDate.getDate() - dayofweeknumber + 1)
 	weekOfDateMySQLFriendly = weekOfDate.toLocaleDateString("en-US", {timeZone: "Europe/London"})
 	weekOfDate  = weekOfDate.toLocaleDateString("en-GB", {timeZone: "Europe/London"})
@@ -410,6 +479,7 @@
 	})
 
 	$(document).on('show.bs.modal','#setCellModal', function (event) { //detect which row and column triggered the modal
+
 		var button = $(event.relatedTarget) 
 		var recipient = button.data('id') 
 
@@ -475,39 +545,37 @@
 			}
 	        tablename = tablename.slice(0,10).split("/").reverse().join("-");
 
-
-
 			if (timeday[0] == 0){
 				updateTimetableTable(getval, tablename, cellname, "all")
 			}else{
 				updateTimetableTable(getval, tablename, cellname, "single")
 			}
 		}
-
+		hourCount();
 		$('#setCellModal').modal('hide');
 	})
 
 	$('.delete').on('click', function(){ //delete = setting cell to blank string
-			getval = "";
-		    let cell = "t " + timeday[0] + " c " + timeday[1];
-		    let cellname = "c" + timeday[1]; 
-		    document.getElementById(cell).innerHTML = getval; //Saves it to the cell# that triggered the function.
-		    let tablename = data[timeday[0].toString()]["weekdate"]; //gets the ID of the row
+		getval = "";
+	    let cell = "t " + timeday[0] + " c " + timeday[1];
+	    let cellname = "c" + timeday[1]; 
+	    document.getElementById(cell).innerHTML = getval; //Saves it to the cell# that triggered the function.
+	    let tablename = data[timeday[0].toString()]["weekdate"]; //gets the ID of the row
 
-	        let date2 = new Date(tablename)
-	        if (date2.toString() !== "Invalid Date") {
-				tablename = date2.toLocaleDateString("en-GB", {timeZone: "Europe/London"})
-			}
-	        tablename = tablename.slice(0,10).split("/").reverse().join("-");
+        let date2 = new Date(tablename)
+        if (date2.toString() !== "Invalid Date") {
+			tablename = date2.toLocaleDateString("en-GB", {timeZone: "Europe/London"})
+		}
+        tablename = tablename.slice(0,10).split("/").reverse().join("-");
 
 
 
-			if (timeday[0] == 0){
-				updateTimetableTable(getval, tablename, cellname, "all")
-			}else{
-				updateTimetableTable(getval, tablename, cellname, "single")
-			}
-
+		if (timeday[0] == 0){
+			updateTimetableTable(getval, tablename, cellname, "all")
+		}else{
+			updateTimetableTable(getval, tablename, cellname, "single")
+		}
+		hourCount();
 		$('#setCellModal').modal('hide');
 	})
 
@@ -515,6 +583,24 @@
 	$('#setCellModal').on('hidden.bs.modal', function () {		//resets the text field
    		$(this).find('form').trigger('reset');
 	})
+
+	$(document).on('shown.bs.modal','#hoursModal', function (event) {
+        hourCount();
+	})
+
+	$('#hoursModal').on('hidden.bs.modal', function () {		//resets the text field
+   		document.getElementById("hourstable").remove();
+	})
+
+	$("#hoursModal").blur(function() {
+ 		$('#hoursModal').modal('hide');
+	});
+
+	$('body').click(function(event) {
+		if (!event.target.className.includes("inmodal")){
+	 		$('#setCellModal').modal('hide');
+ 		}
+	});
 
 	function AddTable(){		//When Add Table button is clicked, prints a new table
 		if (document.getElementsByClassName("active")[0].innerHTML.includes("t "+(data.length-1).toString())){
@@ -546,7 +632,7 @@
 				var tds = document.getElementsByTagName("td");	//get all td elements
 
 				for (let cellinc = 0; cellinc < 84; cellinc++) {
-					tds[index].innerHTML = '<div id="t ' + tablecount + ' c ' + cellinc + '">' + data[tablecount]["c"+cellinc.toString()] + '</div>' + tds[index].innerHTML + '<button id="' + tablecount + ' c ' + cellinc + '" class="button" data-toggle="modal" data-target="#setCellModal" data-id="' + tablecount + ' ' + cellinc +'"><i class="bi bi-pencil"></i></button></section>';
+					tds[index].innerHTML = '<span id="t ' + tablecount + ' c ' + cellinc + '">' + data[tablecount]["c"+cellinc.toString()] + '</span><button id="' + tablecount + ' c ' + cellinc + '" class="button" data-toggle="modal" data-target="#setCellModal" data-id="' + tablecount + ' ' + cellinc +'"><i class="bi bi-pencil"></i></button>';
 					index = index + 1;
 				}
 			}
@@ -658,23 +744,21 @@
 	}
 
 	function loadCellData(){
-		//console.log("loadCellData")
 		var tds = document.getElementsByTagName("td");
-
 		let index = 0;
         
         for (tblinc = 0; tblinc < tablecount; tblinc++) { //remove buttons for past weeks
         	if (tblinc < currentweektable && tblinc != 0) {
 	        	for (let cellinc = 0; cellinc < 84; cellinc++) {
 					tds[index].innerHTML = "";
-					tds[index].innerHTML = '<div id="t ' + tblinc + ' c ' + cellinc + '">' + data[tblinc.toString()]["c"+cellinc.toString()] + '</div>' + tds[index].innerHTML + '</section>';
+					tds[index].innerHTML = '<div id="t ' + tblinc + ' c ' + cellinc + '">' + data[tblinc.toString()]["c"+cellinc.toString()] + '</div>';
 					index = index + 1;
 				}
 			}
 			else {	
 				for (let cellinc = 0; cellinc < 84; cellinc++) {
 					tds[index].innerHTML = "";
-					tds[index].innerHTML = '<div id="t ' + tblinc + ' c ' + cellinc + '">' + data[tblinc.toString()]["c"+cellinc.toString()] + '</div>' + tds[index].innerHTML + '<button id="' + tblinc + ' c ' + cellinc + '" class="button" data-toggle="modal" data-target="#setCellModal" data-id="' + tblinc + ' ' + cellinc +'"><i class="bi bi-pencil"></i></button></section>';
+					tds[index].innerHTML = '<span id="t ' + tblinc + ' c ' + cellinc + '">' + data[tblinc.toString()]["c"+cellinc.toString()] + '</span><button id="' + tblinc + ' c ' + cellinc + '" class="button" data-toggle="modal" data-target="#setCellModal" data-id="' + tblinc + ' ' + cellinc +'"><i class="bi bi-pencil"></i></button>';
 					index = index + 1;
 				}
         	}
@@ -717,8 +801,31 @@
 	        });
 	}
 
+	function hourCount() {
+		var thisweek = document.getElementsByClassName("active")[0];
+		var cells = [];
+		var newrow;
+		for (i=0; i<84; i++){
+			cells.push(thisweek.getElementsByTagName("td")[i].innerText);
+		}
+		var map = cells.reduce(function(prev, cur) {
+	  		prev[cur] = (prev[cur] || 0) + 1;
+	  		return prev;
+		}, {});
+		const unique = [...new Set(cells)];
+
+		var body = '<tbody id = "hourstable"></tbody>';
+		modaltable.insertAdjacentHTML("beforeend", body);
+
+		for (i = 1; i < unique.length; i++){
+			newrow = "<tr><td>" + unique[i] + "</td><td>" + map[unique[i]] + "</td></tr>";
+			hourstable.insertAdjacentHTML("beforeend", newrow); 
+		}
+		// console.log(map);
+		// console.log(thisweek.getElementsByTagName("h2"));
+	}
 
 </script> 
 
 </body>
-</html
+</html>
