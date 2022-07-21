@@ -391,7 +391,7 @@
 	$.ajax({
 		type: 'POST',			//copy values of primary row to new row, with new id = weekdate
 		url: urlLocation+'/getTutorNames',
-		success: function(result){tutors = result}
+		success: function(result){tutors = result; console.log(tutors);}
 	});
 
 	$.ajax({
@@ -413,7 +413,6 @@
 	weekOfDate  = weekOfDate.toLocaleDateString("en-GB", {timeZone: "Europe/London"})
 
 	function loadTable() {
-
 		document.getElementById("tables").innerHTML = "<div class='loader'></div> <div class='item default'> <h2> Default Schedule </h2><table><tr> <th>Time</th> <th>Monday</th> <th>Tuesday</th> <th>Wednesday</th> <th>Thursday</th> <th>Friday</th> <th>Saturday</th> <th>Sunday</th> </tr> <tr> <th>0900-1000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1000-1100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1100-1200</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1200-1300</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1300-1400</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1400-1500</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1500-1600</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1600-1700</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1700-1800</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1800-1900</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>1900-2000</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> <tr> <th>2000-2100</th> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr> </table> </br></br></br> </div>"
 
 		let weekformat = "past";
@@ -676,7 +675,6 @@
 			tutor = tutors[tutors.indexOf(localStorage.getItem('tutor'))+1]
 		}
 		localStorage.setItem('tutor', tutor)
-		
 		window.location.reload()
 	}
 
@@ -793,11 +791,12 @@
 	});  
 	function addTutor(){
 		let newTutor = prompt()
+
 		$.ajax({
 	            type: 'POST',
 	            url: urlLocation+'/addTutor',
 	            data: {'newTutor': newTutor},
-				success: function(result){console.log(result);localStorage.setItem('tutor', newTutor); window.location.reload()}
+				success: function(result){console.log(result);localStorage.setItem('tutor', newTutor); setTimeout(function(){window.location.reload()}, 1000)}
 	        });
 	}
 
